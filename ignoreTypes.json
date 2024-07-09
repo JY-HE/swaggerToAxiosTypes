@@ -1,0 +1,4 @@
+{
+    "common": [],
+    "auditBiz": ["/api/Analysis/Instruction", "/api/BusinessMetrics", "/BusinessMetrics", "/api/node"]
+}

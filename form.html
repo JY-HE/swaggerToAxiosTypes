@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/element-plus"></script>
+    <title>web-biz-service请求库方法汇总</title>
+  </head>
+  <body>
+    <div id="app">
+      <el-container style="height: 100vh">
+        <el-aside width="300px" style="background-color: rgb(238, 241, 246)">
+          <el-menu class="el-menu-vertical-demo" :default-active="activeBizName">
+            <el-menu-item :index="''" @click="menuClick('')">
+              <span>全部</span>
+            </el-menu-item>
+            <el-menu-item :index="bizName" v-for="(data, bizName, index) in descMap" :key="bizName" @click="menuClick(bizName)">
+              <span>{{bizName}}-{{data?.desc || ''}}</span>
+            </el-menu-item>
+          </el-menu>
+        </el-aside>
+        <el-container>
+          <el-header class="shadow-md flex justify-center items-center relative">
+            <div class="w-2/4 flex justify-center items-center">
+              <el-select v-model="searchType" size="large" placeholder="请选择搜索类型">
+                <el-option label="请求名称" value="1"></el-option>
+                <el-option label="请求URL" value="2"></el-option>
+                <el-option label="请求描述" value="3"></el-option>
+              </el-select>
+              <el-input size="large" placeholder="请输入内容" v-model="searchValue" class="input-with-select" clearable @change="search" @clear="search"> </el-input>
+              <el-button size="large" type="primary" @click="search">搜索</el-button>
+              <el-button size="large" plain type="primary" @click="reset">重置</el-button>
+            </div>
+            <div class="absolute top-1/2 right-10 transform -translate-y-2/4">
+              <el-tag class="" type="primary">版本：1.5.7-beta.1</el-tag>
+              <el-link class="" type="primary" href="https://greasyfork.org/zh-CN/scripts/450328-swaggerskiptocustommethods" target="_blank">油猴脚本工具</el-link>
+            </div>
+          </el-header>
+          <el-main></el-main>
+        </el-container>
+      </el-container>
+    </div>
+
+    <script>
+      const App = {
+        mounted() {},
+        data() {
+          return {};
+        },
+        computed: {
+          // biz模块信息说明
+          descMap() {
+            return {
+              gcsBiz: { desc: 'GPS点位服务', doc: 'http://10.8.109.235:7319' },
+              cgsBiz: { desc: '认知服务(文字转语音)', doc: 'http://10.8.109.235:3378' },
+              mmtBiz: { desc: '拍传服务', doc: 'http://10.8.109.235:17599' },
+              aggsBiz: { desc: '聚合查询服务', doc: 'http://10.8.109.235:3885' },
+              authBiz: { desc: '认证授权服务', doc: 'http://10.8.109.235:9810' },
+              edmsBiz: { desc: '调度服务', doc: 'http://10.8.109.235:3333' },
+              orgsBiz: { desc: '组织架构服务', doc: 'http://10.8.109.242:10270' },
+              eventBiz: { desc: '事件服务', doc: 'http://10.8.109.235:3088' },
+              preplanBiz: { desc: '事件服务-预案', doc: 'http://10.8.109.235:3088' },
+              taskBiz: { desc: '事件服务-任务', doc: 'http://10.8.109.235:3088' },
+              associatedBiz: { desc: '事件服务-事件关联', doc: 'http://10.8.109.235:3088' },
+              viscsBiz: { desc: '可视化配置服务', doc: 'http://10.8.109.231:12360' },
+              alarmBiz: { desc: '告警服务', doc: 'http://10.8.109.235:20173' },
+              quartzBiz: { desc: '定时任务服务', doc: 'http://10.8.109.235:5198' },
+              geoDataBiz: { desc: '地理数据服务', doc: 'http://10.8.109.235:3098' },
+              fileStorageBiz: { desc: '文件存储服务', doc: 'http://10.8.109.235:17591' },
+              geoAnalysisBiz: { desc: '地理分析服务', doc: 'http://10.8.109.235:3099' },
+              preplanAnalysisBiz: { desc: '预案分析服务', doc: 'http://10.8.109.235:3089' },
+              modelAnalysisBiz: { desc: '模型分析服务', doc: 'http://10.8.109.235:20175' },
+              videoFusionServiceBiz: { desc: '视频融合服务', doc: 'http://10.8.109.235:3078' },
+              vcsBiz: { desc: '视频会议服务', doc: 'http://10.8.109.235:41303' },
+              auditBiz: { desc: '审计服务', doc: 'http://10.8.109.233:32537' },
+              assetBiz: { desc: '资产服务', doc: 'http://10.8.109.242:13735' },
+              facilityBiz: { desc: '设施服务层(不维护)', doc: 'http://10.8.109.235:3078' },
+              resourceBiz: { desc: '静态资源服务', doc: '' },
+            };
+          },
+        },
+        methods: {},
+      };
+      Vue.createApp(App).use(ElementPlus).mount('#app');
+    </script>
+  </body>
+</html>

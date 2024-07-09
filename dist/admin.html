@@ -1,0 +1,365 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <link rel="stylesheet" href="./assets/index.css" />
+        <link href="./assets/tailwind.min.css" rel="stylesheet" />
+        <link href="./assets/style.css" rel="stylesheet" />
+        <script src="./assets/vue.global.js"></script>
+        <script src="./assets/index.full.js"></script>
+        <script src="./assets/axios.min.js"></script>
+        <title>web-biz-type接口类型定义管理</title>
+    </head>
+    <body>
+        <div id="admin">
+            <el-container style="height: 100vh">
+                <el-header>
+                    <div class="logo">接口类型定义管理</div>
+                    <div class="nav">
+                        <div class="navItem" :class="{active: item.name === activeName}" v-for="item in menuItem" :key="item.name" @click="handleMenuClick(item)">{{item.label}}</div>
+                    </div>
+                </el-header>
+                <el-main v-loading="loading">
+                    <div class="addContainer" v-if="['add','manage','preview'].includes(activeName)">
+                        <div class="tableContainer" v-if="step === 0">
+                            <div class="bizItem" v-for="(list, name) in newApi" :key="name">
+                                <h4 class="bizName">{{name}}</h4>
+                                <el-table :data="list" style="width: 100%">
+                                    <el-table-column type="expand">
+                                        <template v-slot="props">
+                                            <el-row class="px-10 py-5">
+                                                <el-col :span="12">
+                                                    <el-descriptions title="请求参数" :column="1">
+                                                        <el-descriptions-item :label="key" v-for="(value, key) in getParams(props.row)">{{value || ''}}</el-descriptions-item>
+                                                    </el-descriptions>
+                                                </el-col>
+                                                <el-col :span="12">
+                                                    <el-descriptions title="请求结果" :column="1">
+                                                        <el-descriptions-item :label="key" v-for="(value, key) in getResponse(props.row)">{{value || ''}}</el-descriptions-item>
+                                                    </el-descriptions>
+                                                </el-col>
+                                            </el-row>
+                                        </template>
+                                    </el-table-column>
+
+                                    <el-table-column prop="summary" label="接口描述"></el-table-column>
+                                    <el-table-column prop="url" label="url" width="300"></el-table-column>
+                                    <el-table-column prop="method" label="请求类型" width="100">
+                                        <template #default="scope">
+                                            <el-tag size="small" :type="methodColorType[scope.row.method]" effect="dark">{{scope.row.method.toUpperCase()}}</el-tag>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="tag" label="标签" width="160"></el-table-column>
+                                    <el-table-column prop="version" label="version" width="100"> </el-table-column>
+                                    <el-table-column prop="requestTypeName" label="请求参数类型定义名称" width="250">
+                                        <template #default="scope">
+                                            <el-input v-model.trim="scope.row.requestTypeName" placeholder="请输入" :disabled="!scope.row.parameters && !scope.row.requestBody" />
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="responsesTypeName" label="响应参数类型定义名称" width="250">
+                                        <template #default="scope">
+                                            <el-input v-model.trim="scope.row.responsesTypeName" placeholder="请输入" :disabled="!scope.row.responses" />
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="operationId" label="operationId" width="180">
+                                        <template #default="scope">
+                                            <el-button type="primary" size="small" v-if="scope.row.operationId" @click="getRecommendApiName(scope.row.operationId)">{{scope.row.operationId}}</el-button>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column label="操作" width="170">
+                                        <template #default="scope">
+                                            <el-button type="primary" size="small" @click="operation('ignore',name,scope.$index)">忽略</el-button>
+                                            <el-button type="danger" size="small" @click="operation('delete',name,scope.$index)">删除</el-button>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                            </div>
+                        </div>
+                        <div class="tableContainer" v-else-if="step === 1">
+                            <!-- <el-input
+						:value="changeLogData"
+						autosize
+						type="textarea"
+					/> -->
+                            <div class="dataItem">
+                                <h4>修改记录</h4>
+                                <div class="btnList">
+                                    <el-button @click="copyPlus(changeLogData)">复制更新文档</el-button>
+                                    <el-button @click="replyCopyData">重置文档</el-button>
+                                </div>
+                            </div>
+                            <div class="dataItem" v-for="(value, key) in newApi" :key="key">
+                                <h4>{{key}}</h4>
+                                <div class="btnList">
+                                    <el-button type="primary" @click="copyData('api', key)">复制Api内容</el-button>
+                                    <el-button type="primary" plain @click="copyData('biz', key)">复制Biz内容</el-button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="operation">
+                            <el-button type="default" size="large" @click="step -= 1" v-if="step > 0">上一步</el-button>
+                            <el-button type="primary" size="large" @click="save">下一步</el-button>
+                        </div>
+                    </div>
+                </el-main>
+            </el-container>
+        </div>
+
+        <script>
+            const App = {
+                data() {
+                    return {
+                        activeName: 'add',
+                        newApi: {},
+                        loading: false,
+                        expands: [],
+                        warehouseApi: {},
+                        changeLogData: '',
+                        step: 0,
+                        markdownData: {},
+                    };
+                },
+                computed: {
+                    menuItem() {
+                        return [
+                            { label: '新增接口类型定义', name: 'add' },
+                            { label: '完善接口类型定义', name: 'manage' },
+                            { label: '查看旧接口类型定义', name: 'preview' },
+                            { label: '文档更新', name: 'updateDoc' },
+                        ];
+                    },
+                    // 请求类型演示映射
+                    methodColorType: () => ({ get: 'info', post: 'success', put: 'warning', delete: 'danger' }),
+                },
+                methods: {
+                    handleMenuClick({ name }) {
+                        ['add', 'manage', 'preview'].includes(name) && (this.activeName = name);
+                        name === 'add' && this.getNew();
+                        name === 'manage' && this.getOld();
+                        name === 'preview' && this.updateOld();
+                        name === 'updateDoc' && this.updateDoc();
+                    },
+                    /** 获取已有接口 */
+                    updateOld() {
+                        this.loading = true;
+                        fetch('/api/oldApi')
+                            .then((res) => res.json())
+                            .then((res) => {
+                                this.newApi = res.data || {};
+                                console.log('🚀 ~ admin.html:154 ~ this.newApi:', this.newApi);
+                            })
+                            .finally(() => {
+                                this.loading = false;
+                            });
+                    },
+                    /** 获取仓库临时接口 */
+                    getOld() {
+                        this.loading = true;
+                        fetch('/api/currentApi')
+                            .then((res) => res.json())
+                            .then((res) => {
+                                this.newApi = res.data || {};
+                            })
+                            .finally(() => {
+                                this.loading = false;
+                            });
+                    },
+                    /** 获取仓库接口 */
+                    getNew() {
+                        this.loading = true;
+                        fetch('/api/newApi')
+                            .then((res) => res.json())
+                            .then((res) => {
+                                this.newApi = res.data || {};
+                            })
+                            .finally(() => {
+                                this.loading = false;
+                            });
+                        // 请求已有方法缓存
+                        fetch('/api/warehouse')
+                            .then((res) => res.json())
+                            .then((res) => {
+                                this.warehouseApi = Object.entries(res.data || {}).reduce((obj, [k, v]) => ({ ...obj, [k]: Object.values(v) }), {});
+                            });
+                    },
+                    // 参数格式化
+                    getParams(data) {
+                        const formatParamsData = data.method === 'get' ? data.parameters || [] : [].concat(data.parameters || [], data.requestBody || []) || [];
+                        return formatParamsData.reduce((obj, i) => {
+                            let str = `参数类型：${i?.in === 'header' ? 'headers' : i.type} 参数说明：${i?.description || '空'} ${i?.default ? ' 默认值：' + i?.default : ''} ${i?.required ? '（必填）' : ''}`;
+                            return { ...obj, [i.key]: str };
+                        }, {});
+                    },
+                    // 响应格式化
+                    getResponse(data) {
+                        if (!data.responses) return {};
+                        return data.responses.reduce((pre, i) => ({ ...pre, [i.key]: i.description }), {});
+                    },
+                    // 配置保存
+                    async save() {
+                        if (this.step === 0) {
+                            if (this.activeName === 'manage') {
+                                this.step += 1;
+                                return;
+                            }
+                            // 校验是否存在未填写类型定义名称的数据
+                            const errorData = Object.entries(this.newApi).reduce((obj, [bizName, list]) => {
+                                if (obj) return obj;
+                                const errorItem = list.find((item) => {
+                                    // 未填写请求类型定义名称
+                                    if (item.parameters || item.requestBody) {
+                                        return item.requestTypeName === '';
+                                    }
+                                    // 未填写响应类型定义名称
+                                    if (item.responses) {
+                                        return item.responsesTypeName === '';
+                                    }
+                                    // 重复名
+                                    return this.warehouseApi[bizName].some((i) => i.requestTypeName === item.requestTypeName || i.responsesTypeName === item.responsesTypeName);
+                                });
+                                return errorItem ? { ...errorItem, bizName } : null;
+                            }, null);
+                            if (errorData) {
+                                console.log('🚀 ~ admin.html:227 ~ errorData:', errorData);
+                                if (!errorData.requestTypeName) {
+                                    if (errorData.parameters || errorData.requestBody) {
+                                        this.$message.warning(`🤖${errorData.bizName} 接口 ${errorData.summary} 未填写请求类型定义名称`);
+                                        this.copy(errorData.summary);
+                                    }
+                                } else if (!errorData.responsesTypeName) {
+                                    if (errorData.responses) {
+                                        this.$message.warning(`🤖${errorData.bizName} 接口 ${errorData.summary} 未填写响应类型定义名称`);
+                                        this.copy(errorData.summary);
+                                    }
+                                } else {
+                                    if (this.warehouseApi[bizName].some((i) => i.requestTypeName === errorData.requestTypeName)) {
+                                        this.$message.warning(`🤖${errorData.bizName} 请求类型定义名称 ${errorData.requestTypeName} 重复`);
+                                        this.copy(errorData.requestTypeName);
+                                    } else {
+                                        this.$message.warning(`🤖${errorData.bizName} 响应类型定义名称 ${errorData.responsesTypeName} 重复`);
+                                        this.copy(errorData.responsesTypeName);
+                                    }
+                                }
+                                return;
+                            }
+                            const params = Object.entries(this.newApi).reduce((obj, [bizName, list]) => {
+                                return { ...obj, [bizName]: list.map((i) => ({ url: i.url, methodName: i.methodName, method: i.method })) };
+                            }, {});
+                            const loading = this.$loading({
+                                lock: true,
+                                text: '正在保存配置...',
+                                spinner: 'el-icon-loading',
+                                background: 'rgba(0, 0, 0, 0.5)',
+                            });
+                            axios
+                                .post('/api/newApi', this.newApi)
+                                .then((res) => {
+                                    this.changeLogData = res.data.data;
+                                    this.step += 1;
+                                })
+                                .finally(() => {
+                                    loading.close();
+                                });
+                        } else {
+                            this.updateDoc();
+                        }
+                    },
+                    // 更新文档
+                    updateDoc() {
+                        // 提交到线上
+                        this.$prompt('请输入版本号', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            inputType: 'text',
+                            inputPattern: /\S+/,
+                            inputErrorMessage: '版本号不能为空',
+                        })
+                            .then(({ value }) => {
+                                axios.post('/api/updateDoc', { version: value }).then((res) => {
+                                    if (res.data.status === 200) {
+                                        this.$message.success('保存成功');
+                                    } else {
+                                        this.$message.error('保存失败');
+                                    }
+                                });
+                            })
+                            .catch(() => {
+                                this.$message.info('取消更新');
+                            });
+                    },
+                    // 复制markdown内容
+                    async copyData(copyType, bizName) {
+                        const strData = this.markdownData[bizName];
+                        if (!strData) {
+                            const res = await axios.get('/api/getMarkdown', { params: { bizName } });
+                            if (res.data.data) {
+                                const [api, biz] = res.data.data.split('\n----\n');
+                                this.markdownData = { ...this.markdownData, [bizName]: { api, biz } };
+                                this.copyPlus(this.markdownData[bizName][copyType]);
+                            }
+                        } else {
+                            this.copyPlus(this.markdownData[bizName][copyType]);
+                        }
+                    },
+                    replyCopyData() {
+                        this.copyData = {};
+                        this.$message.success('清除成功');
+                    },
+                    // 接口操作
+                    async operation(scene, name, index) {
+                        // 将此接口永久忽略
+                        if (scene === 'ignore') {
+                            const data = this.newApi[name][index];
+                            const res = await axios.post('/api/ignore', {
+                                bizName: name,
+                                apiUrl: data.url,
+                            });
+                            if ([200, 403].includes(res.data.status)) {
+                                this.newApi = {
+                                    ...this.newApi,
+                                    [name]: this.newApi[name].filter((_, i) => index !== i),
+                                };
+                                this.$message.success('添加成功');
+                            }
+                        }
+                        // 此次编辑忽略此接口
+                        if (scene === 'delete') {
+                            this.newApi = {
+                                ...this.newApi,
+                                [name]: this.newApi[name].filter((_, i) => index !== i),
+                            };
+                        }
+                    },
+                    // 将推荐方法名放到剪切板
+                    getRecommendApiName(name) {
+                        const apiName = name.replace(/^[A-Z]/, (s) => s.toLowerCase());
+                        this.copy(apiName);
+                        this.$message.success('复制成功');
+                    },
+                    // 添加内容到剪切板
+                    copy(str = '') {
+                        if (!str) return;
+                        const input = document.createElement('input');
+                        input.value = str;
+                        document.body.appendChild(input);
+                        input.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(input);
+                    },
+                    // 保留换行符复制到剪切板
+                    copyPlus(str = '') {
+                        let that = this;
+                        let txa = document.createElement('textarea');
+                        txa.value = str;
+                        document.body.appendChild(txa);
+                        txa.select();
+                        let res = document.execCommand('copy');
+                        document.body.removeChild(txa);
+                        this.$message.success('复制成功');
+                    },
+                },
+            };
+            Vue.createApp(App).use(ElementPlus).mount('#admin');
+        </script>
+    </body>
+</html>

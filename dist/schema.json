@@ -1,0 +1,262 @@
+{
+	"auditBiz": {
+		"AuditingService.Models.Common.RequestResult": {
+			"enum": [
+				0,
+				1,
+				2
+			],
+			"type": "integer",
+			"description": "操作结果枚举",
+			"format": "int32"
+		},
+		"AuditingService.Models.Response.Operation": {
+			"type": "object",
+			"description": "操作日志",
+			"properties": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "操作id",
+					"required": false
+				},
+				{
+					"key": "userId",
+					"type": "string",
+					"description": "用户信息",
+					"required": false
+				},
+				{
+					"key": "account",
+					"type": "string",
+					"description": "用户账户",
+					"required": false
+				},
+				{
+					"key": "dateTime",
+					"type": "string",
+					"description": "时间",
+					"required": false
+				},
+				{
+					"key": "remoteAddress",
+					"type": "string",
+					"description": "客户端地址",
+					"required": false
+				},
+				{
+					"key": "application",
+					"type": "string",
+					"description": "应用",
+					"required": false
+				},
+				{
+					"key": "uri",
+					"type": "string",
+					"description": "操作说明",
+					"required": false
+				},
+				{
+					"key": "method",
+					"type": "string",
+					"description": "操作",
+					"required": false
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "操作类型",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "请求状态",
+					"required": false
+				},
+				{
+					"key": "result",
+					"type": "string",
+					"description": "操作结果",
+					"required": false
+				},
+				{
+					"key": "product",
+					"type": "integer",
+					"description": "产品端口号",
+					"required": false
+				}
+			]
+		},
+		"AuditingService.Models.Database.PageableQueryResult`1[AuditingService.Models.Response.Operation]": {
+			"type": "object",
+			"description": "分页查询结果",
+			"properties": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"details": [
+						{
+							"key": "id",
+							"type": "string",
+							"description": "操作id",
+							"required": false
+						},
+						{
+							"key": "userId",
+							"type": "string",
+							"description": "用户信息",
+							"required": false
+						},
+						{
+							"key": "account",
+							"type": "string",
+							"description": "用户账户",
+							"required": false
+						},
+						{
+							"key": "dateTime",
+							"type": "string",
+							"description": "时间",
+							"required": false
+						},
+						{
+							"key": "remoteAddress",
+							"type": "string",
+							"description": "客户端地址",
+							"required": false
+						},
+						{
+							"key": "application",
+							"type": "string",
+							"description": "应用",
+							"required": false
+						},
+						{
+							"key": "uri",
+							"type": "string",
+							"description": "操作说明",
+							"required": false
+						},
+						{
+							"key": "method",
+							"type": "string",
+							"description": "操作",
+							"required": false
+						},
+						{
+							"key": "type",
+							"type": "string",
+							"description": "操作类型",
+							"required": false
+						},
+						{
+							"key": "status",
+							"type": "integer",
+							"description": "请求状态",
+							"required": false
+						},
+						{
+							"key": "result",
+							"type": "string",
+							"description": "操作结果",
+							"required": false
+						},
+						{
+							"key": "product",
+							"type": "integer",
+							"description": "产品端口号",
+							"required": false
+						}
+					]
+				}
+			]
+		},
+		"AuditingService.Models.Response.Record": {
+			"type": "object",
+			"description": "预案数据",
+			"properties": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "预案ID",
+					"required": false
+				},
+				{
+					"key": "userId",
+					"type": "string",
+					"description": "用户id",
+					"required": false
+				},
+				{
+					"key": "account",
+					"type": "string",
+					"description": "用户账户",
+					"required": false
+				},
+				{
+					"key": "userAgent",
+					"type": "string",
+					"description": "用户浏览器",
+					"required": false
+				},
+				{
+					"key": "dateTime",
+					"type": "string",
+					"description": "时间",
+					"required": false
+				},
+				{
+					"key": "remoteAddress",
+					"type": "string",
+					"description": "远端地址",
+					"required": false
+				},
+				{
+					"key": "upAddress",
+					"type": "string",
+					"description": "后台地址",
+					"required": false
+				},
+				{
+					"key": "requestTime",
+					"type": "string",
+					"description": "请求时间",
+					"required": false
+				},
+				{
+					"key": "responseTime",
+					"type": "string",
+					"description": "上游响应时间",
+					"required": false
+				},
+				{
+					"key": "application",
+					"type": "string",
+					"description": "前端服务",
+					"required": false
+				},
+				{
+					"key": "method",
+					"type": "string",
+					"description": "操作",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "操作结果",
+					"required": false
+				}
+			]
+		}
+	}
+}
