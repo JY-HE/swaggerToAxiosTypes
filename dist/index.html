@@ -27,7 +27,7 @@
                     <el-header class="flex justify-center items-center relative">
                         <div class="w-1/3 flex justify-center items-center">
                             <div class="absolute top-1/2 left-10 transform -translate-y-2/4">
-                                <el-tag class="version" type="danger">版本:1.0.2</el-tag>
+                                <el-tag class="version" type="danger">版本:1.0.3</el-tag>
                             </div>
                             <el-input v-model="searchValue" placeholder="请输入" class="input-with-select" clearable @change="search" @clear="search">
                                 <template #prepend>
@@ -202,10 +202,13 @@
                     getExample(data) {
                         let str = '';
                         if (data.requestTypeName) {
-                            str = `${data.requestTypeName}, `;
+                            str = `${data.requestTypeName}`;
                         }
                         if (data.responsesTypeName) {
-                            str = str + `${data.responsesTypeName}`;
+                            if (str) {
+                                str += ', ';
+                            }
+                            str += `${data.responsesTypeName}`;
                         }
                         return str ? `import { ${str} } from '@rdapp/web-biz-type/${data.bizName}'` : '';
                     },

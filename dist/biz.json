@@ -1,828 +1,1167 @@
 {
-  "rrsBiz": [
-    {
-      "url": "/api/MainResources",
-      "tag": "MainResources",
-      "method": "get",
-      "summary": "按条件查询主资源",
-      "version": "v1",
-      "requestTypeName": "GetMainResourcesReqType",
-      "responsesTypeName": "GetMainResourcesResType",
-      "parameters": [
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型",
-          "default": null,
-          "in": "query"
-        },
-        {
-          "key": "page",
-          "type": "integer",
-          "description": "页码, 从1开始",
-          "default": 1,
-          "in": "query"
-        },
-        {
-          "key": "per_page",
-          "type": "integer",
-          "description": "页容量, [1, 128]",
-          "default": 100,
-          "in": "query"
-        }
-      ],
-      "responses": [
-        {
-          "key": "totalCount",
-          "type": "integer",
-          "description": "总数",
-          "required": false
-        },
-        {
-          "key": "records",
-          "type": "array",
-          "description": "记录",
-          "required": false,
-          "typeNameMap": "MainResourceOutCommonType"
-        }
-      ],
-      "requestBody": null
-    },
-    {
-      "url": "/api/MainResources",
-      "tag": "MainResources",
-      "method": "post",
-      "summary": "创建主资源",
-      "version": "v1",
-      "requestTypeName": "AddMainResourcesReqType",
-      "responsesTypeName": "AddMainResourcesResType",
-      "parameters": null,
-      "responses": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "ID",
-          "required": false
-        },
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型",
-          "required": false
-        },
-        {
-          "key": "resourceId",
-          "type": "string",
-          "description": "资源ID",
-          "required": false
-        }
-      ],
-      "requestBody": [
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型",
-          "required": true,
-          "in": "requestBody"
-        },
-        {
-          "key": "resourceId",
-          "type": "string",
-          "description": "资源ID",
-          "required": true,
-          "in": "requestBody"
-        }
-      ]
-    },
-    {
-      "url": "/api/MainResources/{id}",
-      "tag": "MainResources",
-      "method": "get",
-      "summary": "通过主资源ID获取主资源",
-      "version": "v1",
-      "requestTypeName": "GetMainResByIdReqType",
-      "responsesTypeName": "GetMainResByIdResType",
-      "operationId": "GetMainResource",
-      "parameters": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "id",
-          "required": true,
-          "default": null,
-          "in": "path"
-        }
-      ],
-      "responses": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "ID",
-          "required": false
-        },
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型",
-          "required": false
-        },
-        {
-          "key": "resourceId",
-          "type": "string",
-          "description": "资源ID",
-          "required": false
-        }
-      ],
-      "requestBody": null
-    },
-    {
-      "url": "/api/MainResources/{id}",
-      "tag": "MainResources",
-      "method": "put",
-      "summary": "更新主资源",
-      "version": "v1",
-      "requestTypeName": "UpdateMainResByIdReqType",
-      "responsesTypeName": "",
-      "parameters": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "id",
-          "required": true,
-          "default": null,
-          "in": "path"
-        }
-      ],
-      "responses": null,
-      "requestBody": [
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型",
-          "required": true,
-          "in": "requestBody"
-        },
-        {
-          "key": "resourceId",
-          "type": "string",
-          "description": "资源ID",
-          "required": true,
-          "in": "requestBody"
-        }
-      ]
-    },
-    {
-      "url": "/api/MainResources/{id}",
-      "tag": "MainResources",
-      "method": "delete",
-      "summary": "删除主资源",
-      "version": "v1",
-      "requestTypeName": "DeleteMainResByIdReqType",
-      "responsesTypeName": "",
-      "parameters": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "id",
-          "required": true,
-          "default": null,
-          "in": "path"
-        }
-      ],
-      "responses": null,
-      "requestBody": null
-    },
-    {
-      "url": "/api/ResourceRelationships/resource",
-      "tag": "ResourceRelationships",
-      "method": "post",
-      "summary": "获取主体下所有资源",
-      "version": "v1",
-      "requestTypeName": "SearchAllResourceReqType",
-      "responsesTypeName": "SearchAllResourceResType",
-      "operationId": "SearchAllResource",
-      "parameters": null,
-      "responses": [
-        {
-          "key": "totalCount",
-          "type": "integer",
-          "description": "总数",
-          "required": false
-        },
-        {
-          "key": "records",
-          "type": "array",
-          "description": "记录",
-          "required": false,
-          "typeNameMap": "ResourceOutCommonType"
-        }
-      ],
-      "requestBody": [
-        {
-          "key": "pageIndex",
-          "type": "integer",
-          "description": "页码, 从1开始",
-          "required": false,
-          "in": "requestBody"
-        },
-        {
-          "key": "pageSize",
-          "type": "integer",
-          "description": "页容量, [1, 128]",
-          "required": false,
-          "in": "requestBody"
-        },
-        {
-          "key": "mainResource",
-          "description": "主体资源",
-          "required": true,
-          "typeNameMap": "ResourceInfoCommonType",
-          "in": "requestBody"
-        }
-      ]
-    },
-    {
-      "url": "/api/ResourceRelationships/resource",
-      "tag": "ResourceRelationships",
-      "method": "put",
-      "summary": "更新主体下资源关系",
-      "version": "v1",
-      "requestTypeName": "UpdateAllResourceReqType",
-      "responsesTypeName": "UpdateAllResourceResType",
-      "operationId": "Update",
-      "parameters": null,
-      "responses": [
-        {
-          "key": "totalCount",
-          "type": "integer",
-          "description": "总数",
-          "required": false
-        },
-        {
-          "key": "records",
-          "type": "array",
-          "description": "记录",
-          "required": false,
-          "typeNameMap": "ResourceOutCommonType"
-        }
-      ],
-      "requestBody": [
-        {
-          "key": "resources",
-          "type": "array",
-          "description": "资源【不存在资源会自动创建】",
-          "required": true,
-          "typeNameMap": "RelationshipResourceInCommonType",
-          "in": "requestBody"
-        },
-        {
-          "key": "mainResource",
-          "type": "object",
-          "description": "主体资源【不存在主体资源会自动创建】",
-          "required": true,
-          "typeNameMap": "MainResourceInCommonType",
-          "in": "requestBody"
-        }
-      ]
-    },
-    {
-      "url": "/api/ResourceRelationships/resource/single",
-      "tag": "ResourceRelationships",
-      "method": "post",
-      "summary": "资源查询",
-      "version": "v1",
-      "requestTypeName": "SearchSingleResourceReqType",
-      "responsesTypeName": "SearchSingleResourceResType",
-      "operationId": "SearchSingleResource",
-      "parameters": null,
-      "responses": [
-        {
-          "key": "totalCount",
-          "type": "integer",
-          "description": "总数",
-          "required": false
-        },
-        {
-          "key": "records",
-          "type": "array",
-          "description": "记录",
-          "required": false,
-          "typeNameMap": "SimpleResourceOutCommonType"
-        }
-      ],
-      "requestBody": [
-        {
-          "key": "pageIndex",
-          "type": "integer",
-          "description": "页码, 从1开始",
-          "required": false,
-          "in": "requestBody"
-        },
-        {
-          "key": "pageSize",
-          "type": "integer",
-          "description": "页容量, [1, 128]",
-          "required": false,
-          "in": "requestBody"
-        },
-        {
-          "key": "mainResources",
-          "type": "array",
-          "description": "主体资源集合",
-          "required": true,
-          "typeNameMap": "ResourceInfoCommonType",
-          "in": "requestBody"
-        },
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型",
-          "required": true,
-          "in": "requestBody"
-        },
-        {
-          "key": "dataHandleType",
-          "type": "integer",
-          "description": "数据处理类型",
-          "required": false,
-          "typeNameMap": "DataHandleTypeCommonType",
-          "in": "requestBody"
-        }
-      ]
-    },
-    {
-      "url": "/api/ResourceRelationships/resource/details",
-      "tag": "ResourceRelationships",
-      "method": "post",
-      "summary": "批量获取资源详情（带关联主体）",
-      "version": "v1",
-      "requestTypeName": "GetResourceDetailsReqType",
-      "responsesTypeName": "GetResourceDetailsResType",
-      "operationId": "GetResourceDetails",
-      "parameters": null,
-      "responses": [
-        {
-          "key": "totalCount",
-          "type": "integer",
-          "description": "总数",
-          "required": false
-        },
-        {
-          "key": "records",
-          "type": "array",
-          "description": "记录",
-          "required": false,
-          "typeNameMap": "ResourceDetailOutCommonType"
-        }
-      ],
-      "requestBody": [
-        {
-          "key": "resources",
-          "type": "array",
-          "description": "资源ID",
-          "required": true,
-          "typeNameMap": "ResourceInfoCommonType",
-          "in": "requestBody"
-        },
-        {
-          "key": "type",
-          "type": "string",
-          "description": "目标资源类型【不传默认查全部主体资源】",
-          "required": false,
-          "in": "requestBody"
-        }
-      ]
-    },
-    {
-      "url": "/api/ResourceRelationships/main/details",
-      "tag": "ResourceRelationships",
-      "method": "post",
-      "summary": "批量获取主体资源详情（带关联下资源）",
-      "version": "v1",
-      "requestTypeName": "BatchMainDetailsReqType",
-      "responsesTypeName": "BatchMainDetailsResType",
-      "operationId": "BatchGetMainDetails",
-      "parameters": null,
-      "responses": [
-        {
-          "key": "totalCount",
-          "type": "integer",
-          "description": "总数",
-          "required": false
-        },
-        {
-          "key": "records",
-          "type": "array",
-          "description": "记录",
-          "required": false,
-          "typeNameMap": "MainResourceDetailOutCommonType"
-        }
-      ],
-      "requestBody": [
-        {
-          "key": "mainResources",
-          "type": "array",
-          "description": "批量主体",
-          "required": false,
-          "typeNameMap": "ResourceInfoCommonType",
-          "in": "requestBody"
-        },
-        {
-          "key": "type",
-          "type": "string",
-          "description": "目标资源类型【不传默认查全部挂载资源】",
-          "required": false,
-          "in": "requestBody"
-        }
-      ]
-    },
-    {
-      "url": "/api/ResourceRelationships",
-      "tag": "ResourceRelationships",
-      "method": "put",
-      "summary": "绑定资源关系",
-      "version": "v1",
-      "requestTypeName": "BatchResRelationshipsReqType",
-      "responsesTypeName": "",
-      "parameters": null,
-      "responses": null,
-      "requestBody": [
-        {
-          "key": "resources",
-          "type": "array",
-          "description": "资源【不存在资源会自动创建】",
-          "required": true,
-          "typeNameMap": "RelationshipResourceInCommonType",
-          "in": "requestBody"
-        },
-        {
-          "key": "mainResource",
-          "type": "object",
-          "description": "主体资源【不存在主体资源会自动创建】",
-          "required": true,
-          "typeNameMap": "MainResourceInCommonType",
-          "in": "requestBody"
-        }
-      ]
-    },
-    {
-      "url": "/api/ResourceRelationships",
-      "tag": "ResourceRelationships",
-      "method": "post",
-      "summary": "解绑资源关系",
-      "version": "v1",
-      "requestTypeName": "UntieResRelationshipsReqType",
-      "responsesTypeName": "",
-      "parameters": null,
-      "responses": null,
-      "requestBody": [
-        {
-          "key": "resources",
-          "type": "array",
-          "description": "资源【不存在资源会自动创建】",
-          "required": true,
-          "typeNameMap": "RelationshipResourceInCommonType",
-          "in": "requestBody"
-        },
-        {
-          "key": "mainResource",
-          "type": "object",
-          "description": "主体资源【不存在主体资源会自动创建】",
-          "required": true,
-          "typeNameMap": "MainResourceInCommonType",
-          "in": "requestBody"
-        }
-      ]
-    },
-    {
-      "url": "/api/Resources",
-      "tag": "Resources",
-      "method": "get",
-      "summary": "按条件查询资源",
-      "version": "v1",
-      "requestTypeName": "GetResourcesReqType",
-      "responsesTypeName": "GetResourcesResType",
-      "parameters": [
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型",
-          "default": null,
-          "in": "query"
-        },
-        {
-          "key": "page",
-          "type": "integer",
-          "description": "页码, 从1开始",
-          "default": 1,
-          "in": "query"
-        },
-        {
-          "key": "per_page",
-          "type": "integer",
-          "description": "页容量, [1, 128]",
-          "default": 100,
-          "in": "query"
-        }
-      ],
-      "responses": [
-        {
-          "key": "totalCount",
-          "type": "integer",
-          "description": "总数",
-          "required": false
-        },
-        {
-          "key": "records",
-          "type": "array",
-          "description": "记录",
-          "required": false,
-          "typeNameMap": "ResourceOutCommonType"
-        }
-      ],
-      "requestBody": null
-    },
-    {
-      "url": "/api/Resources",
-      "tag": "Resources",
-      "method": "post",
-      "summary": "创建资源",
-      "version": "v1",
-      "requestTypeName": "AddResourcesReqType",
-      "responsesTypeName": "AddResourcesResType",
-      "parameters": null,
-      "responses": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "ID",
-          "required": false
-        },
-        {
-          "key": "resourceId",
-          "type": "string",
-          "description": "资源ID",
-          "required": false
-        },
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型ID",
-          "required": false
-        }
-      ],
-      "requestBody": [
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型【不存在类型会自动创建】",
-          "required": true,
-          "in": "requestBody"
-        },
-        {
-          "key": "resourceId",
-          "type": "string",
-          "description": "资源ID",
-          "required": true,
-          "in": "requestBody"
-        }
-      ]
-    },
-    {
-      "url": "/api/Resources/{id}",
-      "tag": "Resources",
-      "method": "get",
-      "summary": "通过资源ID获取资源",
-      "version": "v1",
-      "requestTypeName": "GetResourcesByIdReqType",
-      "responsesTypeName": "GetResourcesByIdResType",
-      "operationId": "GetResource",
-      "parameters": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "id",
-          "required": true,
-          "default": null,
-          "in": "path"
-        }
-      ],
-      "responses": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "ID",
-          "required": false
-        },
-        {
-          "key": "resourceId",
-          "type": "string",
-          "description": "资源ID",
-          "required": false
-        },
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型ID",
-          "required": false
-        }
-      ],
-      "requestBody": null
-    },
-    {
-      "url": "/api/Resources/{id}",
-      "tag": "Resources",
-      "method": "put",
-      "summary": "更新资源",
-      "version": "v1",
-      "requestTypeName": "UpdateResourcesByIdReqType",
-      "responsesTypeName": "",
-      "parameters": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "id",
-          "required": true,
-          "default": null,
-          "in": "path"
-        }
-      ],
-      "responses": null,
-      "requestBody": [
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型【不存在类型会自动创建】",
-          "required": true,
-          "in": "requestBody"
-        },
-        {
-          "key": "resourceId",
-          "type": "string",
-          "description": "资源ID",
-          "required": true,
-          "in": "requestBody"
-        }
-      ]
-    },
-    {
-      "url": "/api/Resources/{id}",
-      "tag": "Resources",
-      "method": "delete",
-      "summary": "删除资源",
-      "version": "v1",
-      "requestTypeName": "DeleteResourcesByIdReqType",
-      "responsesTypeName": "",
-      "parameters": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "id",
-          "required": true,
-          "default": null,
-          "in": "path"
-        }
-      ],
-      "responses": null,
-      "requestBody": null
-    },
-    {
-      "url": "/api/ResourceTypes",
-      "tag": "ResourceTypes",
-      "method": "get",
-      "summary": "按条件查询资源类型",
-      "version": "v1",
-      "requestTypeName": "GetResourceTypesReqType",
-      "responsesTypeName": "GetResourceTypesResType",
-      "parameters": [
-        {
-          "key": "keyword",
-          "type": "string",
-          "description": "模糊匹配关键字",
-          "default": null,
-          "in": "query"
-        },
-        {
-          "key": "page",
-          "type": "integer",
-          "description": "页码, 从1开始",
-          "default": 1,
-          "in": "query"
-        },
-        {
-          "key": "per_page",
-          "type": "integer",
-          "description": "页容量, [1, 128]",
-          "default": 100,
-          "in": "query"
-        }
-      ],
-      "responses": [
-        {
-          "key": "totalCount",
-          "type": "integer",
-          "description": "总数",
-          "required": false
-        },
-        {
-          "key": "records",
-          "type": "array",
-          "description": "记录",
-          "required": false,
-          "typeNameMap": "ResourceTypeOutCommonType"
-        }
-      ],
-      "requestBody": null
-    },
-    {
-      "url": "/api/ResourceTypes",
-      "tag": "ResourceTypes",
-      "method": "post",
-      "summary": "创建资源类型",
-      "version": "v1",
-      "requestTypeName": "AddResourceTypesReqType",
-      "responsesTypeName": "AddResourceTypesReqType",
-      "parameters": null,
-      "responses": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "资源类型ID",
-          "required": false
-        },
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型",
-          "required": false
-        },
-        {
-          "key": "source",
-          "type": "integer",
-          "description": "支持资源【1支持主体资源，2支持资源，3主体+资源】",
-          "required": false,
-          "typeNameMap": "SupportSourcesCommonType"
-        }
-      ],
-      "requestBody": [
-        {
-          "key": "type",
-          "type": "string",
-          "description": "Type",
-          "required": true,
-          "in": "requestBody"
-        },
-        {
-          "key": "source",
-          "type": "integer",
-          "description": "支持资源【1支持主体资源，2支持资源，3主体+资源】",
-          "required": true,
-          "typeNameMap": "SupportSourcesCommonType",
-          "in": "requestBody"
-        }
-      ]
-    },
-    {
-      "url": "/api/ResourceTypes/{id}",
-      "tag": "ResourceTypes",
-      "method": "get",
-      "summary": "通过资源类型ID获取资源类型",
-      "version": "v1",
-      "requestTypeName": "GetResourceTypesByIdReqType",
-      "responsesTypeName": "GetResourceTypesByIdResType",
-      "operationId": "GetResourceType",
-      "parameters": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "id",
-          "required": true,
-          "default": null,
-          "in": "path"
-        }
-      ],
-      "responses": [
-        {
-          "key": "id",
-          "type": "string",
-          "description": "资源类型ID",
-          "required": false
-        },
-        {
-          "key": "type",
-          "type": "string",
-          "description": "资源类型",
-          "required": false
-        },
-        {
-          "key": "source",
-          "type": "integer",
-          "description": "支持资源【1支持主体资源，2支持资源，3主体+资源】",
-          "required": false,
-          "typeNameMap": "SupportSourcesCommonType"
-        }
-      ],
-      "requestBody": null
-    }
-  ]
+	"rrsBiz": [
+		{
+			"url": "/api/MainResources",
+			"tag": "MainResources",
+			"method": "get",
+			"summary": "按条件查询主资源",
+			"version": "v1",
+			"requestTypeName": "GetMainResourcesReqType",
+			"responsesTypeName": "GetMainResourcesResType",
+			"parameters": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "page",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"default": 1,
+					"in": "query"
+				},
+				{
+					"key": "per_page",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"default": 100,
+					"in": "query"
+				}
+			],
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "MainResourceOutCommonType"
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/MainResources",
+			"tag": "MainResources",
+			"method": "post",
+			"summary": "创建主资源",
+			"version": "v1",
+			"requestTypeName": "AddMainResourcesReqType",
+			"responsesTypeName": "AddMainResourcesResType",
+			"parameters": null,
+			"responses": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "ID",
+					"required": false
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": false
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": false
+				}
+			],
+			"requestBody": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": true,
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/MainResources/{id}",
+			"tag": "MainResources",
+			"method": "get",
+			"summary": "通过主资源ID获取主资源",
+			"version": "v1",
+			"requestTypeName": "GetMainResByIdReqType",
+			"responsesTypeName": "GetMainResByIdResType",
+			"operationId": "GetMainResource",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "ID",
+					"required": false
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": false
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": false
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/MainResources/{id}",
+			"tag": "MainResources",
+			"method": "put",
+			"summary": "更新主资源",
+			"version": "v1",
+			"requestTypeName": "UpdateMainResByIdReqType",
+			"responsesTypeName": "",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": null,
+			"requestBody": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": true,
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/MainResources/{id}",
+			"tag": "MainResources",
+			"method": "delete",
+			"summary": "删除主资源",
+			"version": "v1",
+			"requestTypeName": "DeleteMainResByIdReqType",
+			"responsesTypeName": "",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": null,
+			"requestBody": null
+		},
+		{
+			"url": "/api/ResourceRelationships/resource",
+			"tag": "ResourceRelationships",
+			"method": "post",
+			"summary": "获取主体下所有资源",
+			"version": "v1",
+			"requestTypeName": "SearchAllResourceReqType",
+			"responsesTypeName": "SearchAllResourceResType",
+			"operationId": "SearchAllResource",
+			"parameters": null,
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "ResourceOutCommonType"
+				}
+			],
+			"requestBody": [
+				{
+					"key": "pageIndex",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "pageSize",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "mainResource",
+					"description": "主体资源",
+					"required": true,
+					"typeNameMap": "ResourceInfoCommonType",
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/ResourceRelationships/resource",
+			"tag": "ResourceRelationships",
+			"method": "put",
+			"summary": "更新主体下资源关系",
+			"version": "v1",
+			"requestTypeName": "UpdateAllResourceReqType",
+			"responsesTypeName": "UpdateAllResourceResType",
+			"operationId": "Update",
+			"parameters": null,
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "ResourceOutCommonType"
+				}
+			],
+			"requestBody": [
+				{
+					"key": "resources",
+					"type": "array",
+					"description": "资源【不存在资源会自动创建】",
+					"required": true,
+					"typeNameMap": "RelationshipResourceInCommonType",
+					"in": "requestBody"
+				},
+				{
+					"key": "mainResource",
+					"type": "object",
+					"description": "主体资源【不存在主体资源会自动创建】",
+					"required": true,
+					"typeNameMap": "MainResourceInCommonType",
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/ResourceRelationships/resource/single",
+			"tag": "ResourceRelationships",
+			"method": "post",
+			"summary": "资源查询",
+			"version": "v1",
+			"requestTypeName": "SearchSingleResourceReqType",
+			"responsesTypeName": "SearchSingleResourceResType",
+			"operationId": "SearchSingleResource",
+			"parameters": null,
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "SimpleResourceOutCommonType"
+				}
+			],
+			"requestBody": [
+				{
+					"key": "pageIndex",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "pageSize",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "mainResources",
+					"type": "array",
+					"description": "主体资源集合",
+					"required": true,
+					"typeNameMap": "ResourceInfoCommonType",
+					"in": "requestBody"
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "dataHandleType",
+					"type": "integer",
+					"description": "数据处理类型",
+					"required": false,
+					"typeNameMap": "DataHandleTypeCommonType",
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/ResourceRelationships/resource/details",
+			"tag": "ResourceRelationships",
+			"method": "post",
+			"summary": "批量获取资源详情（带关联主体）",
+			"version": "v1",
+			"requestTypeName": "GetResourceDetailsReqType",
+			"responsesTypeName": "GetResourceDetailsResType",
+			"operationId": "GetResourceDetails",
+			"parameters": null,
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "ResourceDetailOutCommonType"
+				}
+			],
+			"requestBody": [
+				{
+					"key": "resources",
+					"type": "array",
+					"description": "资源ID",
+					"required": true,
+					"typeNameMap": "ResourceInfoCommonType",
+					"in": "requestBody"
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "目标资源类型【不传默认查全部主体资源】",
+					"required": false,
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/ResourceRelationships/main/details",
+			"tag": "ResourceRelationships",
+			"method": "post",
+			"summary": "批量获取主体资源详情（带关联下资源）",
+			"version": "v1",
+			"requestTypeName": "BatchMainDetailsReqType",
+			"responsesTypeName": "BatchMainDetailsResType",
+			"operationId": "BatchGetMainDetails",
+			"parameters": null,
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "MainResourceDetailOutCommonType"
+				}
+			],
+			"requestBody": [
+				{
+					"key": "mainResources",
+					"type": "array",
+					"description": "批量主体",
+					"required": false,
+					"typeNameMap": "ResourceInfoCommonType",
+					"in": "requestBody"
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "目标资源类型【不传默认查全部挂载资源】",
+					"required": false,
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/ResourceRelationships",
+			"tag": "ResourceRelationships",
+			"method": "put",
+			"summary": "绑定资源关系",
+			"version": "v1",
+			"requestTypeName": "BatchResRelationshipsReqType",
+			"responsesTypeName": "",
+			"parameters": null,
+			"responses": null,
+			"requestBody": [
+				{
+					"key": "resources",
+					"type": "array",
+					"description": "资源【不存在资源会自动创建】",
+					"required": true,
+					"typeNameMap": "RelationshipResourceInCommonType",
+					"in": "requestBody"
+				},
+				{
+					"key": "mainResource",
+					"type": "object",
+					"description": "主体资源【不存在主体资源会自动创建】",
+					"required": true,
+					"typeNameMap": "MainResourceInCommonType",
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/ResourceRelationships",
+			"tag": "ResourceRelationships",
+			"method": "post",
+			"summary": "解绑资源关系",
+			"version": "v1",
+			"requestTypeName": "UntieResRelationshipsReqType",
+			"responsesTypeName": "",
+			"parameters": null,
+			"responses": null,
+			"requestBody": [
+				{
+					"key": "resources",
+					"type": "array",
+					"description": "资源【不存在资源会自动创建】",
+					"required": true,
+					"typeNameMap": "RelationshipResourceInCommonType",
+					"in": "requestBody"
+				},
+				{
+					"key": "mainResource",
+					"type": "object",
+					"description": "主体资源【不存在主体资源会自动创建】",
+					"required": true,
+					"typeNameMap": "MainResourceInCommonType",
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/Resources",
+			"tag": "Resources",
+			"method": "get",
+			"summary": "按条件查询资源",
+			"version": "v1",
+			"requestTypeName": "GetResourcesReqType",
+			"responsesTypeName": "GetResourcesResType",
+			"parameters": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "page",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"default": 1,
+					"in": "query"
+				},
+				{
+					"key": "per_page",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"default": 100,
+					"in": "query"
+				}
+			],
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "ResourceOutCommonType"
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/Resources",
+			"tag": "Resources",
+			"method": "post",
+			"summary": "创建资源",
+			"version": "v1",
+			"requestTypeName": "AddResourcesReqType",
+			"responsesTypeName": "AddResourcesResType",
+			"parameters": null,
+			"responses": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "ID",
+					"required": false
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": false
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型ID",
+					"required": false
+				}
+			],
+			"requestBody": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型【不存在类型会自动创建】",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": true,
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/Resources/{id}",
+			"tag": "Resources",
+			"method": "get",
+			"summary": "通过资源ID获取资源",
+			"version": "v1",
+			"requestTypeName": "GetResourcesByIdReqType",
+			"responsesTypeName": "GetResourcesByIdResType",
+			"operationId": "GetResource",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "ID",
+					"required": false
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": false
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型ID",
+					"required": false
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/Resources/{id}",
+			"tag": "Resources",
+			"method": "put",
+			"summary": "更新资源",
+			"version": "v1",
+			"requestTypeName": "UpdateResourcesByIdReqType",
+			"responsesTypeName": "",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": null,
+			"requestBody": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型【不存在类型会自动创建】",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": true,
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/Resources/{id}",
+			"tag": "Resources",
+			"method": "delete",
+			"summary": "删除资源",
+			"version": "v1",
+			"requestTypeName": "DeleteResourcesByIdReqType",
+			"responsesTypeName": "",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": null,
+			"requestBody": null
+		},
+		{
+			"url": "/api/ResourceTypes",
+			"tag": "ResourceTypes",
+			"method": "get",
+			"summary": "按条件查询资源类型",
+			"version": "v1",
+			"requestTypeName": "GetResourceTypesReqType",
+			"responsesTypeName": "GetResourceTypesResType",
+			"parameters": [
+				{
+					"key": "keyword",
+					"type": "string",
+					"description": "模糊匹配关键字",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "page",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"default": 1,
+					"in": "query"
+				},
+				{
+					"key": "per_page",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"default": 100,
+					"in": "query"
+				}
+			],
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "ResourceTypeOutCommonType"
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/ResourceTypes",
+			"tag": "ResourceTypes",
+			"method": "post",
+			"summary": "创建资源类型",
+			"version": "v1",
+			"requestTypeName": "AddResourceTypesReqType",
+			"responsesTypeName": "AddResourceTypesReqType",
+			"parameters": null,
+			"responses": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "资源类型ID",
+					"required": false
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": false
+				},
+				{
+					"key": "source",
+					"type": "integer",
+					"description": "支持资源【1支持主体资源，2支持资源，3主体+资源】",
+					"required": false,
+					"typeNameMap": "SupportSourcesCommonType"
+				}
+			],
+			"requestBody": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "Type",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "source",
+					"type": "integer",
+					"description": "支持资源【1支持主体资源，2支持资源，3主体+资源】",
+					"required": true,
+					"typeNameMap": "SupportSourcesCommonType",
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/ResourceTypes/{id}",
+			"tag": "ResourceTypes",
+			"method": "get",
+			"summary": "通过资源类型ID获取资源类型",
+			"version": "v1",
+			"requestTypeName": "GetResourceTypesByIdReqType",
+			"responsesTypeName": "GetResourceTypesByIdResType",
+			"operationId": "GetResourceType",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "资源类型ID",
+					"required": false
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": false
+				},
+				{
+					"key": "source",
+					"type": "integer",
+					"description": "支持资源【1支持主体资源，2支持资源，3主体+资源】",
+					"required": false,
+					"typeNameMap": "SupportSourcesCommonType"
+				}
+			],
+			"requestBody": null
+		}
+	],
+	"auditBiz": [
+		{
+			"url": "/api/Operation",
+			"tag": "Operation",
+			"method": "get",
+			"summary": "按条件查询操作",
+			"version": "v1",
+			"requestTypeName": "GetOperationReqType",
+			"responsesTypeName": "GetOperationResType",
+			"parameters": [
+				{
+					"key": "key",
+					"type": "string",
+					"description": "关键字:用户账号、操作说明",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "product",
+					"type": "integer",
+					"description": "产品(应用); 默认0是全部",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "platformId",
+					"type": "string",
+					"description": "分级",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "date_start",
+					"type": "string",
+					"description": "记录起始时间",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "date_stop",
+					"type": "string",
+					"description": "记录终结时间",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "sort_field",
+					"type": "string",
+					"description": "排序字段",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "service",
+					"type": "string",
+					"description": "记录归属服务gateway/vs 默认：gateway（操作日志）",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "user_ip",
+					"type": "string",
+					"description": "用户IP",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "usr_id",
+					"type": "string",
+					"description": "用户ID",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "Uri",
+					"type": "string",
+					"description": "url",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "result",
+					"type": "integer",
+					"description": "操作结果0-全部 1-成功  2-失败",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "page",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"default": 1,
+					"in": "query"
+				},
+				{
+					"key": "per_page",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"default": 100,
+					"in": "query"
+				}
+			],
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "OperationCommonType"
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/Operation",
+			"tag": "Operation",
+			"method": "post",
+			"summary": "按条件查询操作",
+			"version": "v1",
+			"requestTypeName": "SearchOperationReqType",
+			"responsesTypeName": "SearchOperationResType",
+			"parameters": [
+				{
+					"key": "key",
+					"type": "string",
+					"description": "关键字:用户账号、操作说明",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "product",
+					"type": "integer",
+					"description": "产品(应用); 默认0是全部",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "platformId",
+					"type": "string",
+					"description": "分级",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "date_start",
+					"type": "string",
+					"description": "记录起始时间",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "date_stop",
+					"type": "string",
+					"description": "记录终结时间",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "sort_field",
+					"type": "string",
+					"description": "排序字段",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "service",
+					"type": "string",
+					"description": "记录归属服务gateway/vs 默认：gateway（操作日志）",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "user_ip",
+					"type": "string",
+					"description": "用户IP",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "usr_id",
+					"type": "string",
+					"description": "用户ID",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "Uri",
+					"type": "string",
+					"description": "url",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "result",
+					"type": "integer",
+					"description": "操作结果0-全部 1-成功  2-失败",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "page",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"default": 1,
+					"in": "query"
+				},
+				{
+					"key": "per_page",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"default": 100,
+					"in": "query"
+				}
+			],
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "OperationCommonType"
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/Record/{id}",
+			"tag": "Record",
+			"method": "get",
+			"summary": "通过操作记录ID获取详细操作记录",
+			"version": "v1",
+			"requestTypeName": "GetRecordByIdReqType",
+			"responsesTypeName": "GetRecordByIdResType",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				},
+				{
+					"key": "service",
+					"type": "string",
+					"description": "操作日志归属的服务，默认为网关",
+					"default": null,
+					"in": "query"
+				}
+			],
+			"responses": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "预案ID",
+					"required": false
+				},
+				{
+					"key": "userId",
+					"type": "string",
+					"description": "用户id",
+					"required": false
+				},
+				{
+					"key": "account",
+					"type": "string",
+					"description": "用户账户",
+					"required": false
+				},
+				{
+					"key": "userAgent",
+					"type": "string",
+					"description": "用户浏览器",
+					"required": false
+				},
+				{
+					"key": "dateTime",
+					"type": "string",
+					"description": "时间",
+					"required": false
+				},
+				{
+					"key": "remoteAddress",
+					"type": "string",
+					"description": "远端地址",
+					"required": false
+				},
+				{
+					"key": "upAddress",
+					"type": "string",
+					"description": "后台地址",
+					"required": false
+				},
+				{
+					"key": "requestTime",
+					"type": "string",
+					"description": "请求时间",
+					"required": false
+				},
+				{
+					"key": "responseTime",
+					"type": "string",
+					"description": "上游响应时间",
+					"required": false
+				},
+				{
+					"key": "application",
+					"type": "string",
+					"description": "前端服务",
+					"required": false
+				},
+				{
+					"key": "method",
+					"type": "string",
+					"description": "操作",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "操作结果",
+					"required": false
+				}
+			],
+			"requestBody": null
+		}
+	]
 }

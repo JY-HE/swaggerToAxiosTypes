@@ -20,7 +20,7 @@
                     </div>
                 </el-header>
                 <el-main v-loading="loading">
-                    <div class="addContainer" v-if="['add','manage','preview'].includes(activeName)">
+                    <div class="addContainer" v-if="['add','manage'].includes(activeName)">
                         <div class="tableContainer" v-if="step === 0">
                             <div class="bizItem" v-for="(list, name) in newApi" :key="name">
                                 <h4 class="bizName">{{name}}</h4>
