@@ -192,6 +192,13 @@
 // };
 
 module.exports = {
+    rrsBiz: {
+        label: '资源关联服务',
+        url: 'http://newdev.rdapp.com:53839/docs/v1/ResourceRelationshipService-API.json',
+        primaryName: 'ResourceRelationshipService',
+        address: '10.8.109.235',
+        port: '54229',
+    },
     auditBiz: {
         label: '审计服务',
         url: 'http://10.8.109.233:32537/docs/v1/AuditingService-API.json',

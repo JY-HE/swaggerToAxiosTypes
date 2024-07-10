@@ -35,7 +35,88 @@
   "alertsPlatformBiz": {},
   "facilityBiz": {},
   "scheduleBiz": {},
-  "rrsBiz": {},
+  "rrsBiz": {
+    "get&/api/MainResources": {
+      "requestTypeName": "GetMainResourcesReqType",
+      "responsesTypeName": "GetMainResourcesResType"
+    },
+    "post&/api/MainResources": {
+      "requestTypeName": "AddMainResourcesReqType",
+      "responsesTypeName": "AddMainResourcesResType"
+    },
+    "get&/api/MainResources/{id}": {
+      "requestTypeName": "GetMainResByIdReqType",
+      "responsesTypeName": "GetMainResByIdResType"
+    },
+    "put&/api/MainResources/{id}": {
+      "requestTypeName": "UpdateMainResByIdReqType",
+      "responsesTypeName": ""
+    },
+    "delete&/api/MainResources/{id}": {
+      "requestTypeName": "DeleteMainResByIdReqType",
+      "responsesTypeName": ""
+    },
+    "post&/api/ResourceRelationships/resource": {
+      "requestTypeName": "SearchAllResourceReqType",
+      "responsesTypeName": "SearchAllResourceResType"
+    },
+    "put&/api/ResourceRelationships/resource": {
+      "requestTypeName": "UpdateAllResourceReqType",
+      "responsesTypeName": "UpdateAllResourceResType"
+    },
+    "post&/api/ResourceRelationships/resource/single": {
+      "requestTypeName": "SearchSingleResourceReqType",
+      "responsesTypeName": "SearchSingleResourceResType"
+    },
+    "post&/api/ResourceRelationships/resource/details": {
+      "requestTypeName": "GetResourceDetailsReqType",
+      "responsesTypeName": "GetResourceDetailsResType"
+    },
+    "post&/api/ResourceRelationships/main/details": {
+      "requestTypeName": "BatchMainDetailsReqType",
+      "responsesTypeName": "BatchMainDetailsResType"
+    },
+    "put&/api/ResourceRelationships": {
+      "requestTypeName": "BatchResRelationshipsReqType",
+      "responsesTypeName": ""
+    },
+    "post&/api/ResourceRelationships": {
+      "requestTypeName": "UntieResRelationshipsReqType",
+      "responsesTypeName": ""
+    },
+    "get&/api/Resources": {
+      "requestTypeName": "GetResourcesReqType",
+      "responsesTypeName": "GetResourcesResType"
+    },
+    "post&/api/Resources": {
+      "requestTypeName": "AddResourcesReqType",
+      "responsesTypeName": "AddResourcesResType"
+    },
+    "get&/api/Resources/{id}": {
+      "requestTypeName": "GetResourcesByIdReqType",
+      "responsesTypeName": "GetResourcesByIdResType"
+    },
+    "put&/api/Resources/{id}": {
+      "requestTypeName": "UpdateResourcesByIdReqType",
+      "responsesTypeName": ""
+    },
+    "delete&/api/Resources/{id}": {
+      "requestTypeName": "DeleteResourcesByIdReqType",
+      "responsesTypeName": ""
+    },
+    "get&/api/ResourceTypes": {
+      "requestTypeName": "GetResourceTypesReqType",
+      "responsesTypeName": "GetResourceTypesResType"
+    },
+    "post&/api/ResourceTypes": {
+      "requestTypeName": "AddResourceTypesReqType",
+      "responsesTypeName": "AddResourceTypesReqType"
+    },
+    "get&/api/ResourceTypes/{id}": {
+      "requestTypeName": "GetResourceTypesByIdReqType",
+      "responsesTypeName": "GetResourceTypesByIdResType"
+    }
+  },
   "dcsBiz": {},
   "ntsBiz": {}
 }

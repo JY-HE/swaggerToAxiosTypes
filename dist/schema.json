@@ -1,4 +1,571 @@
 {
+	"rrsBiz": {
+		"Microsoft.AspNetCore.Mvc.ProblemDetails": {
+			"type": "object",
+			"description": "",
+			"properties": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "",
+					"required": false
+				},
+				{
+					"key": "title",
+					"type": "string",
+					"description": "",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "",
+					"required": false
+				},
+				{
+					"key": "detail",
+					"type": "string",
+					"description": "",
+					"required": false
+				},
+				{
+					"key": "instance",
+					"type": "string",
+					"description": "",
+					"required": false
+				}
+			],
+			"commonTypeName": "ProblemDetailsCommonType"
+		},
+		"ResourceRelationshipService.Models.Database.PageableQueryResult`1[ResourceRelationshipService.Models.Response.MainResourceDetailOut]": {
+			"type": "object",
+			"description": "分页查询结果",
+			"properties": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "MainResourceDetailOutCommonType"
+				}
+			],
+			"commonTypeName": "MainResourceDetailOut]CommonType"
+		},
+		"ResourceRelationshipService.Models.Database.PageableQueryResult`1[ResourceRelationshipService.Models.Response.MainResourceOut]": {
+			"type": "object",
+			"description": "分页查询结果",
+			"properties": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "MainResourceOutCommonType"
+				}
+			],
+			"commonTypeName": "MainResourceOut]CommonType"
+		},
+		"ResourceRelationshipService.Models.Database.PageableQueryResult`1[ResourceRelationshipService.Models.Response.ResourceDetailOut]": {
+			"type": "object",
+			"description": "分页查询结果",
+			"properties": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "ResourceDetailOutCommonType"
+				}
+			],
+			"commonTypeName": "ResourceDetailOut]CommonType"
+		},
+		"ResourceRelationshipService.Models.Database.PageableQueryResult`1[ResourceRelationshipService.Models.Response.ResourceOut]": {
+			"type": "object",
+			"description": "分页查询结果",
+			"properties": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "ResourceOutCommonType"
+				}
+			],
+			"commonTypeName": "ResourceOut]CommonType"
+		},
+		"ResourceRelationshipService.Models.Database.PageableQueryResult`1[ResourceRelationshipService.Models.Response.ResourceTypeOut]": {
+			"type": "object",
+			"description": "分页查询结果",
+			"properties": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "ResourceTypeOutCommonType"
+				}
+			],
+			"commonTypeName": "ResourceTypeOut]CommonType"
+		},
+		"ResourceRelationshipService.Models.Database.PageableQueryResult`1[ResourceRelationshipService.Models.Response.SimpleResourceOut]": {
+			"type": "object",
+			"description": "分页查询结果",
+			"properties": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "SimpleResourceOutCommonType"
+				}
+			],
+			"commonTypeName": "SimpleResourceOut]CommonType"
+		},
+		"ResourceRelationshipService.Models.Enum.DataHandleType": {
+			"enum": [
+				0,
+				1
+			],
+			"type": "integer",
+			"description": "数据类型",
+			"format": "int32",
+			"commonTypeName": "DataHandleTypeCommonType"
+		},
+		"ResourceRelationshipService.Models.Enum.SupportSources": {
+			"enum": [
+				1,
+				2,
+				3
+			],
+			"type": "integer",
+			"description": "支持资源【1支持主体资源，2支持资源，3主体+资源】",
+			"format": "int32",
+			"commonTypeName": "SupportSourcesCommonType"
+		},
+		"ResourceRelationshipService.Models.Request.AllResourceQueryRequest": {
+			"type": "object",
+			"description": "所有资源关系查询",
+			"properties": [
+				{
+					"key": "pageIndex",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"required": false
+				},
+				{
+					"key": "pageSize",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"required": false
+				},
+				{
+					"key": "mainResource",
+					"description": "主体资源",
+					"required": true,
+					"typeNameMap": "ResourceInfoCommonType"
+				}
+			],
+			"commonTypeName": "AllResourceQueryRequestCommonType"
+		},
+		"ResourceRelationshipService.Models.Request.MainDetailsQueryRequest": {
+			"type": "object",
+			"description": "批量主体详情查询",
+			"properties": [
+				{
+					"key": "mainResources",
+					"type": "array",
+					"description": "批量主体",
+					"required": false,
+					"typeNameMap": "ResourceInfoCommonType"
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "目标资源类型【不传默认查全部挂载资源】",
+					"required": false
+				}
+			],
+			"commonTypeName": "MainDetailsQueryRequestCommonType"
+		},
+		"ResourceRelationshipService.Models.Request.MainResourceIn": {
+			"type": "object",
+			"description": "主资源",
+			"properties": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": true
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": true
+				}
+			],
+			"commonTypeName": "MainResourceInCommonType"
+		},
+		"ResourceRelationshipService.Models.Request.RelationshipResourceIn": {
+			"type": "object",
+			"description": "关联资源",
+			"properties": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "类型",
+					"required": true
+				},
+				{
+					"key": "resourceIds",
+					"type": "array",
+					"description": "资源id集合",
+					"required": true
+				}
+			],
+			"commonTypeName": "RelationshipResourceInCommonType"
+		},
+		"ResourceRelationshipService.Models.Request.ResourceDetailsQueryRequest": {
+			"type": "object",
+			"description": "资源关系查询",
+			"properties": [
+				{
+					"key": "resources",
+					"type": "array",
+					"description": "资源ID",
+					"required": true,
+					"typeNameMap": "ResourceInfoCommonType"
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "目标资源类型【不传默认查全部主体资源】",
+					"required": false
+				}
+			],
+			"commonTypeName": "ResourceDetailsQueryRequestCommonType"
+		},
+		"ResourceRelationshipService.Models.Request.ResourceIn": {
+			"type": "object",
+			"description": "资源",
+			"properties": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型【不存在类型会自动创建】",
+					"required": true
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": true
+				}
+			],
+			"commonTypeName": "ResourceInCommonType"
+		},
+		"ResourceRelationshipService.Models.Request.ResourceInfo": {
+			"type": "object",
+			"description": "资源信息",
+			"properties": [
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": true
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "主体资源类型",
+					"required": false
+				}
+			],
+			"commonTypeName": "ResourceInfoCommonType"
+		},
+		"ResourceRelationshipService.Models.Request.ResourceRelationshipIn": {
+			"type": "object",
+			"description": "资源关系",
+			"properties": [
+				{
+					"key": "resources",
+					"type": "array",
+					"description": "资源【不存在资源会自动创建】",
+					"required": true,
+					"typeNameMap": "RelationshipResourceInCommonType"
+				},
+				{
+					"key": "mainResource",
+					"type": "object",
+					"description": "主体资源【不存在主体资源会自动创建】",
+					"required": true,
+					"typeNameMap": "MainResourceInCommonType"
+				}
+			],
+			"commonTypeName": "ResourceRelationshipInCommonType"
+		},
+		"ResourceRelationshipService.Models.Request.ResourceRelationshipQueryRequest": {
+			"type": "object",
+			"description": "资源查询",
+			"properties": [
+				{
+					"key": "pageIndex",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"required": false
+				},
+				{
+					"key": "pageSize",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"required": false
+				},
+				{
+					"key": "mainResources",
+					"type": "array",
+					"description": "主体资源集合",
+					"required": true,
+					"typeNameMap": "ResourceInfoCommonType"
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": true
+				},
+				{
+					"key": "dataHandleType",
+					"type": "integer",
+					"description": "数据处理类型",
+					"required": false,
+					"typeNameMap": "DataHandleTypeCommonType"
+				}
+			],
+			"commonTypeName": "ResourceRelationshipQueryRequestCommonType"
+		},
+		"ResourceRelationshipService.Models.Request.ResourceTypeIn": {
+			"type": "object",
+			"description": "资源类型",
+			"properties": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "Type",
+					"required": true
+				},
+				{
+					"key": "source",
+					"type": "integer",
+					"description": "支持资源【1支持主体资源，2支持资源，3主体+资源】",
+					"required": true,
+					"typeNameMap": "SupportSourcesCommonType"
+				}
+			],
+			"commonTypeName": "ResourceTypeInCommonType"
+		},
+		"ResourceRelationshipService.Models.Response.MainResourceDetailOut": {
+			"type": "object",
+			"description": "主体资源详情(带关联资源)",
+			"properties": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": false
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "主体资源ID",
+					"required": false
+				},
+				{
+					"key": "resources",
+					"type": "array",
+					"description": "资源",
+					"required": false,
+					"typeNameMap": "ResourceBaseOutCommonType"
+				}
+			],
+			"commonTypeName": "MainResourceDetailOutCommonType"
+		},
+		"ResourceRelationshipService.Models.Response.MainResourceOut": {
+			"type": "object",
+			"description": "主资源",
+			"properties": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "ID",
+					"required": false
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": false
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": false
+				}
+			],
+			"commonTypeName": "MainResourceOutCommonType"
+		},
+		"ResourceRelationshipService.Models.Response.ResourceBaseOut": {
+			"type": "object",
+			"description": "资源基础信息",
+			"properties": [
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": false
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": false
+				}
+			],
+			"commonTypeName": "ResourceBaseOutCommonType"
+		},
+		"ResourceRelationshipService.Models.Response.ResourceDetailOut": {
+			"type": "object",
+			"description": "资源详情out",
+			"properties": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": false
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": false
+				},
+				{
+					"key": "mainResources",
+					"type": "array",
+					"description": "主体资源",
+					"required": false,
+					"typeNameMap": "ResourceBaseOutCommonType"
+				}
+			],
+			"commonTypeName": "ResourceDetailOutCommonType"
+		},
+		"ResourceRelationshipService.Models.Response.ResourceOut": {
+			"type": "object",
+			"description": "资源输出",
+			"properties": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "ID",
+					"required": false
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": false
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型ID",
+					"required": false
+				}
+			],
+			"commonTypeName": "ResourceOutCommonType"
+		},
+		"ResourceRelationshipService.Models.Response.ResourceTypeOut": {
+			"type": "object",
+			"description": "资源类型",
+			"properties": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "资源类型ID",
+					"required": false
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "资源类型",
+					"required": false
+				},
+				{
+					"key": "source",
+					"type": "integer",
+					"description": "支持资源【1支持主体资源，2支持资源，3主体+资源】",
+					"required": false,
+					"typeNameMap": "SupportSourcesCommonType"
+				}
+			],
+			"commonTypeName": "ResourceTypeOutCommonType"
+		},
+		"ResourceRelationshipService.Models.Response.SimpleResourceOut": {
+			"type": "object",
+			"description": "简单资源",
+			"properties": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "ID",
+					"required": false
+				},
+				{
+					"key": "resourceId",
+					"type": "string",
+					"description": "资源ID",
+					"required": false
+				}
+			],
+			"commonTypeName": "SimpleResourceOutCommonType"
+		}
+	},
 	"auditBiz": {
 		"AuditingService.Models.Common.RequestResult": {
 			"enum": [
