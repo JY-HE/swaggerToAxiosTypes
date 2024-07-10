@@ -1,1 +1,341 @@
-{}
+{
+  "auditBiz": [
+    {
+      "url": "/api/Operation",
+      "tag": "Operation",
+      "method": "get",
+      "summary": "按条件查询操作",
+      "version": "v1",
+      "requestTypeName": "GetOperationReqType",
+      "responsesTypeName": "GetOperationResType",
+      "parameters": [
+        {
+          "key": "key",
+          "type": "string",
+          "description": "关键字:用户账号、操作说明",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "product",
+          "type": "integer",
+          "description": "产品(应用); 默认0是全部",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "platformId",
+          "type": "string",
+          "description": "分级",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "date_start",
+          "type": "string",
+          "description": "记录起始时间",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "date_stop",
+          "type": "string",
+          "description": "记录终结时间",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "sort_field",
+          "type": "string",
+          "description": "排序字段",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "service",
+          "type": "string",
+          "description": "记录归属服务gateway/vs 默认：gateway（操作日志）",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "user_ip",
+          "type": "string",
+          "description": "用户IP",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "usr_id",
+          "type": "string",
+          "description": "用户ID",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "Uri",
+          "type": "string",
+          "description": "url",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "result",
+          "type": "integer",
+          "description": "操作结果0-全部 1-成功  2-失败",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "page",
+          "type": "integer",
+          "description": "页码, 从1开始",
+          "default": 1,
+          "in": "query"
+        },
+        {
+          "key": "per_page",
+          "type": "integer",
+          "description": "页容量, [1, 128]",
+          "default": 100,
+          "in": "query"
+        }
+      ],
+      "responses": [
+        {
+          "key": "totalCount",
+          "type": "integer",
+          "description": "总数",
+          "required": false
+        },
+        {
+          "key": "records",
+          "type": "array",
+          "description": "记录",
+          "required": false,
+          "typeNameMap": "OperationCommonType"
+        }
+      ],
+      "requestBody": null
+    },
+    {
+      "url": "/api/Operation",
+      "tag": "Operation",
+      "method": "post",
+      "summary": "按条件查询操作",
+      "version": "v1",
+      "requestTypeName": "SearchOperationReqType",
+      "responsesTypeName": "SearchOperationResType",
+      "parameters": [
+        {
+          "key": "key",
+          "type": "string",
+          "description": "关键字:用户账号、操作说明",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "product",
+          "type": "integer",
+          "description": "产品(应用); 默认0是全部",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "platformId",
+          "type": "string",
+          "description": "分级",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "date_start",
+          "type": "string",
+          "description": "记录起始时间",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "date_stop",
+          "type": "string",
+          "description": "记录终结时间",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "sort_field",
+          "type": "string",
+          "description": "排序字段",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "service",
+          "type": "string",
+          "description": "记录归属服务gateway/vs 默认：gateway（操作日志）",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "user_ip",
+          "type": "string",
+          "description": "用户IP",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "usr_id",
+          "type": "string",
+          "description": "用户ID",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "Uri",
+          "type": "string",
+          "description": "url",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "result",
+          "type": "integer",
+          "description": "操作结果0-全部 1-成功  2-失败",
+          "default": null,
+          "in": "query"
+        },
+        {
+          "key": "page",
+          "type": "integer",
+          "description": "页码, 从1开始",
+          "default": 1,
+          "in": "query"
+        },
+        {
+          "key": "per_page",
+          "type": "integer",
+          "description": "页容量, [1, 128]",
+          "default": 100,
+          "in": "query"
+        }
+      ],
+      "responses": [
+        {
+          "key": "totalCount",
+          "type": "integer",
+          "description": "总数",
+          "required": false
+        },
+        {
+          "key": "records",
+          "type": "array",
+          "description": "记录",
+          "required": false,
+          "typeNameMap": "OperationCommonType"
+        }
+      ],
+      "requestBody": null
+    },
+    {
+      "url": "/api/Record/{id}",
+      "tag": "Record",
+      "method": "get",
+      "summary": "通过操作记录ID获取详细操作记录",
+      "version": "v1",
+      "requestTypeName": "GetRecordByIdReqType",
+      "responsesTypeName": "GetRecordByIdResType",
+      "parameters": [
+        {
+          "key": "id",
+          "type": "string",
+          "description": "id",
+          "required": true,
+          "default": null,
+          "in": "path"
+        },
+        {
+          "key": "service",
+          "type": "string",
+          "description": "操作日志归属的服务，默认为网关",
+          "default": null,
+          "in": "query"
+        }
+      ],
+      "responses": [
+        {
+          "key": "id",
+          "type": "string",
+          "description": "预案ID",
+          "required": false
+        },
+        {
+          "key": "userId",
+          "type": "string",
+          "description": "用户id",
+          "required": false
+        },
+        {
+          "key": "account",
+          "type": "string",
+          "description": "用户账户",
+          "required": false
+        },
+        {
+          "key": "userAgent",
+          "type": "string",
+          "description": "用户浏览器",
+          "required": false
+        },
+        {
+          "key": "dateTime",
+          "type": "string",
+          "description": "时间",
+          "required": false
+        },
+        {
+          "key": "remoteAddress",
+          "type": "string",
+          "description": "远端地址",
+          "required": false
+        },
+        {
+          "key": "upAddress",
+          "type": "string",
+          "description": "后台地址",
+          "required": false
+        },
+        {
+          "key": "requestTime",
+          "type": "string",
+          "description": "请求时间",
+          "required": false
+        },
+        {
+          "key": "responseTime",
+          "type": "string",
+          "description": "上游响应时间",
+          "required": false
+        },
+        {
+          "key": "application",
+          "type": "string",
+          "description": "前端服务",
+          "required": false
+        },
+        {
+          "key": "method",
+          "type": "string",
+          "description": "操作",
+          "required": false
+        },
+        {
+          "key": "status",
+          "type": "integer",
+          "description": "操作结果",
+          "required": false
+        }
+      ],
+      "requestBody": null
+    }
+  ]
+}

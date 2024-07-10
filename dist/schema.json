@@ -8,7 +8,8 @@
 			],
 			"type": "integer",
 			"description": "操作结果枚举",
-			"format": "int32"
+			"format": "int32",
+			"commonTypeName": "RequestResultCommonType"
 		},
 		"AuditingService.Models.Response.Operation": {
 			"type": "object",
@@ -86,7 +87,8 @@
 					"description": "产品端口号",
 					"required": false
 				}
-			]
+			],
+			"commonTypeName": "OperationCommonType"
 		},
 		"AuditingService.Models.Database.PageableQueryResult`1[AuditingService.Models.Response.Operation]": {
 			"type": "object",
@@ -103,82 +105,10 @@
 					"type": "array",
 					"description": "记录",
 					"required": false,
-					"details": [
-						{
-							"key": "id",
-							"type": "string",
-							"description": "操作id",
-							"required": false
-						},
-						{
-							"key": "userId",
-							"type": "string",
-							"description": "用户信息",
-							"required": false
-						},
-						{
-							"key": "account",
-							"type": "string",
-							"description": "用户账户",
-							"required": false
-						},
-						{
-							"key": "dateTime",
-							"type": "string",
-							"description": "时间",
-							"required": false
-						},
-						{
-							"key": "remoteAddress",
-							"type": "string",
-							"description": "客户端地址",
-							"required": false
-						},
-						{
-							"key": "application",
-							"type": "string",
-							"description": "应用",
-							"required": false
-						},
-						{
-							"key": "uri",
-							"type": "string",
-							"description": "操作说明",
-							"required": false
-						},
-						{
-							"key": "method",
-							"type": "string",
-							"description": "操作",
-							"required": false
-						},
-						{
-							"key": "type",
-							"type": "string",
-							"description": "操作类型",
-							"required": false
-						},
-						{
-							"key": "status",
-							"type": "integer",
-							"description": "请求状态",
-							"required": false
-						},
-						{
-							"key": "result",
-							"type": "string",
-							"description": "操作结果",
-							"required": false
-						},
-						{
-							"key": "product",
-							"type": "integer",
-							"description": "产品端口号",
-							"required": false
-						}
-					]
+					"typeNameMap": "OperationCommonType"
 				}
-			]
+			],
+			"commonTypeName": "Operation]CommonType"
 		},
 		"AuditingService.Models.Response.Record": {
 			"type": "object",
@@ -256,7 +186,8 @@
 					"description": "操作结果",
 					"required": false
 				}
-			]
+			],
+			"commonTypeName": "RecordCommonType"
 		}
 	}
 }

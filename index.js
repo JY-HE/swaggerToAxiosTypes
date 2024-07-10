@@ -53,12 +53,12 @@ async function init(buildType = 0) {
     res.forEach((item) => console.log(item.config.url, item.status === 200 ? `success` : 'fail'));
     // 过滤忽略的接口
     const ignorePaths = await readJson(path.join(__dirname, './ignoreTypes.json'));
+    let newSchemaDataJson = {};
     /**
      * 解析swagger文档接口数据
      */
     res.map(async (bizRes, index) => {
         try {
-            const schemaDataJson = await readJson(path.join(__dirname, '/dist/schema.json'));
             const {
                 paths,
                 components: { schemas },
@@ -102,7 +102,9 @@ async function init(buildType = 0) {
                                 type: value.type || refObj.type,
                                 description: value.description ? value.description.replace(descReg, '') : refObj.description ? refObj.description.replace(descReg, '') : '',
                                 required: required.includes(key),
-                                details: details,
+                                // details: details,
+                                // 映射的公共type名称
+                                typeNameMap: refObj.commonTypeName || refName ? `${refName.split('.')?.at(-1)}CommonType` : '',
                             };
                         } else {
                             return {
@@ -113,15 +115,12 @@ async function init(buildType = 0) {
                             };
                         }
                     });
-                    return { ...pre, [schemaName]: { type, description: description.replace(descReg, ''), properties: params } };
+                    return { ...pre, [schemaName]: { type, description: description.replace(descReg, ''), properties: params, commonTypeName: `${schemaName.split('.')?.at(-1)}CommonType` } };
                 } else {
-                    return { ...pre, [schemaName]: schemaData };
+                    return { ...pre, [schemaName]: { ...schemaData, commonTypeName: `${schemaName.split('.')?.at(-1)}CommonType` } };
                 }
             }, {});
-
-            const newSchemaDataJson = { ...schemaDataJson, [bizName]: schemaData };
-            // 将 schemaData 写入json文件
-            await fs.writeFileSync(path.join(__dirname, `/dist/schema.json`), JSON.stringify(newSchemaDataJson, null, '\t'), 'utf8');
+            newSchemaDataJson = { ...newSchemaDataJson, [bizName]: schemaData };
 
             /**
              * 处理 path 请求
@@ -215,7 +214,7 @@ async function init(buildType = 0) {
     });
 
     // 将 schemaData 写入json文件
-    // await fs.writeFileSync(path.join(__dirname, `/dist/schema.json`), JSON.stringify(schemaData, null, '\t'), 'utf8');
+    await fs.writeFileSync(path.join(__dirname, `/dist/schema.json`), JSON.stringify(newSchemaDataJson, null, '\t'), 'utf8');
 
     // 对空的biz模块进行移除
     Reflect.ownKeys(requestConfig).forEach((key) => {

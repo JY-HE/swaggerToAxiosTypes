@@ -1,28 +1,41 @@
 {
-    "gcsBiz": {},
-    "cgsBiz": {},
-    "mmtBiz": {},
-    "aggsBiz": {},
-    "authBiz": {},
-    "edmsBiz": {},
-    "orgsBiz": {},
-    "eventBiz": {},
-    "viscsBiz": {},
-    "alarmBiz": {},
-    "quartzBiz": {},
-    "geoDataBiz": {},
-    "fileStorageBiz": {},
-    "geoAnalysisBiz": {},
-    "preplanAnalysisBiz": {},
-    "modelAnalysisBiz": {},
-    "videoFusionServiceBiz": {},
-    "vcsBiz": {},
-    "auditBiz": {},
-    "assetBiz": {},
-    "alertsPlatformBiz": {},
-    "facilityBiz": {},
-    "scheduleBiz": {},
-    "rrsBiz": {},
-    "dcsBiz": {},
-    "ntsBiz": {}
+  "gcsBiz": {},
+  "cgsBiz": {},
+  "mmtBiz": {},
+  "aggsBiz": {},
+  "authBiz": {},
+  "edmsBiz": {},
+  "orgsBiz": {},
+  "eventBiz": {},
+  "viscsBiz": {},
+  "alarmBiz": {},
+  "quartzBiz": {},
+  "geoDataBiz": {},
+  "fileStorageBiz": {},
+  "geoAnalysisBiz": {},
+  "preplanAnalysisBiz": {},
+  "modelAnalysisBiz": {},
+  "videoFusionServiceBiz": {},
+  "vcsBiz": {},
+  "auditBiz": {
+    "get&/api/Operation": {
+      "requestTypeName": "GetOperationReqType",
+      "responsesTypeName": "GetOperationResType"
+    },
+    "post&/api/Operation": {
+      "requestTypeName": "SearchOperationReqType",
+      "responsesTypeName": "SearchOperationResType"
+    },
+    "get&/api/Record/{id}": {
+      "requestTypeName": "GetRecordByIdReqType",
+      "responsesTypeName": "GetRecordByIdResType"
+    }
+  },
+  "assetBiz": {},
+  "alertsPlatformBiz": {},
+  "facilityBiz": {},
+  "scheduleBiz": {},
+  "rrsBiz": {},
+  "dcsBiz": {},
+  "ntsBiz": {}
 }
