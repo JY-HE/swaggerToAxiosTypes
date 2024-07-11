@@ -27,7 +27,7 @@
                     <el-header class="flex justify-center items-center relative">
                         <div class="w-1/3 flex justify-center items-center">
                             <div class="absolute top-1/2 left-10 transform -translate-y-2/4">
-                                <el-tag class="version" type="danger">版本:1.0.3</el-tag>
+                                <el-tag class="version" type="danger">版本:1.0.4</el-tag>
                             </div>
                             <el-input v-model="searchValue" placeholder="请输入" class="input-with-select" clearable @change="search" @clear="search">
                                 <template #prepend>
@@ -49,8 +49,8 @@
                             <el-switch v-model="dark" inline-prompt active-text="☀️" inactive-text="🌙" @change="setDefaultShowType" />
                         </div>
                     </el-header>
-                    <el-main>
-                        <el-table ref="tableRef" stripe :data="tableData" @row-click="clickRowHandle" v-loading="loading">
+                    <el-main class="overflow-hidden">
+                        <el-table ref="tableRef" stripe height="100%" :data="tableData" @row-click="clickRowHandle" v-loading="loading">
                             <el-table-column type="expand">
                                 <template v-slot="props">
                                     <el-row class="px-10 py-5">
@@ -65,21 +65,23 @@
                             <el-table-column label="请求类型名称" prop="requestTypeName">
                                 <template #default="scope">
                                     <el-button title="点击复制" type="primary" size="small" v-if="scope.row.requestTypeName" @click.stop="copyName(scope.row.requestTypeName)">{{scope.row.requestTypeName}}</el-button>
+                                    <el-tag v-else type="danger" effect="dark">无</el-tag>
                                 </template>
                             </el-table-column>
                             <el-table-column label="响应类型名称" prop="responsesTypeName">
                                 <template #default="scope">
                                     <el-button title="点击复制" type="primary" size="small" v-if="scope.row.responsesTypeName" @click.stop="copyName(scope.row.responsesTypeName)">{{scope.row.responsesTypeName}}</el-button>
+                                    <el-tag v-else type="danger" effect="dark">无</el-tag>
                                 </template>
                             </el-table-column>
-                            <el-table-column label="所属模块" prop="bizName" width="280px">
+                            <el-table-column label="所属模块" prop="bizName">
                                 <template #default="scope">
                                     <el-tag>{{scope.row.subBiz || scope.row.bizName}}</el-tag> -
                                     <span class="text-sm muduleLabel">{{descMap[scope.row.subBiz || scope.row.bizName]?.desc || ''}}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label="请求描述" prop="summary"> </el-table-column>
-                            <el-table-column label="请求类型" prop="method" width="100px">
+                            <el-table-column label="请求类型" prop="method" width="100px" align="center">
                                 <template #default="scope">
                                     <el-tag size="small" :type="methodColorType[scope.row.method]" effect="dark">{{scope.row.method.toUpperCase()}}</el-tag>
                                 </template>
@@ -89,7 +91,7 @@
                                     <el-tag>{{scope.row.version}}</el-tag>
                                 </template>
                             </el-table-column>
-                            <el-table-column label="操作" align="center" width="150px">
+                            <el-table-column label="操作" align="center" width="100px">
                                 <template #default="scope">
                                     <!-- <el-button size="small" type="primary" @click.stop="skipSwagger(scope.row)" v-if="descMap[scope.row.bizName]?.doc">查看</el-button> -->
                                     <el-button size="small" type="warning" @click.stop="copyName(getExample(scope.row))" v-if="getExample(scope.row)">复制</el-button>

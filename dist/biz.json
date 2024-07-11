@@ -1,4 +1,1267 @@
 {
+	"quartzBiz": [
+		{
+			"url": "/api/Jobs",
+			"tag": "Jobs",
+			"method": "get",
+			"summary": "查询所有定时任务",
+			"version": "v1",
+			"requestTypeName": "GetJobsReqType",
+			"responsesTypeName": "GetJobsResType",
+			"parameters": [
+				{
+					"key": "Keyword",
+					"type": "string",
+					"description": "关键字",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "BizName",
+					"type": "string",
+					"description": "业务名",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "page",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"default": 1,
+					"in": "query"
+				},
+				{
+					"key": "per_page",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"default": 100,
+					"in": "query"
+				}
+			],
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "JobEntityOutCommonType"
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/Jobs",
+			"tag": "Jobs",
+			"method": "post",
+			"summary": "添加一个定时任务",
+			"version": "v1",
+			"requestTypeName": "AddJobsReqType",
+			"responsesTypeName": "AddJobsResType",
+			"parameters": null,
+			"responses": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "定时任务 Id",
+					"required": false
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": false
+				},
+				{
+					"key": "groupName",
+					"type": "string",
+					"description": "定时任务所属组",
+					"required": false
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式",
+					"required": false,
+					"typeNameMap": "JobModeCommonType"
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false
+				},
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": false
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "任务状态。0-正常 | 1-已停止 | 2-完成 | 3-错误 | 4-阻塞（已有任务执行中）| 5-触发器不存在",
+					"required": false,
+					"typeNameMap": "TriggerStateCommonType"
+				},
+				{
+					"key": "nextExecuteTime",
+					"type": "string",
+					"description": "下次执行时间",
+					"required": false
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": false
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务数据",
+					"required": false
+				},
+				{
+					"key": "createTime",
+					"type": "string",
+					"description": "创建时间",
+					"required": false
+				}
+			],
+			"requestBody": [
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式（1-定时|2-手动）",
+					"required": false,
+					"typeNameMap": "JobModeCommonType",
+					"in": "requestBody"
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务所需的参数，用于传到 RabbitMq 上",
+					"required": true,
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/Jobs/{id}",
+			"tag": "Jobs",
+			"method": "get",
+			"summary": "查询指定定时任务",
+			"version": "v1",
+			"requestTypeName": "GetJobsByIdReqType",
+			"responsesTypeName": "GetJobsByIdResType",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "定时任务 Id",
+					"required": false
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": false
+				},
+				{
+					"key": "groupName",
+					"type": "string",
+					"description": "定时任务所属组",
+					"required": false
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式",
+					"required": false,
+					"typeNameMap": "JobModeCommonType"
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false
+				},
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": false
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "任务状态。0-正常 | 1-已停止 | 2-完成 | 3-错误 | 4-阻塞（已有任务执行中）| 5-触发器不存在",
+					"required": false,
+					"typeNameMap": "TriggerStateCommonType"
+				},
+				{
+					"key": "nextExecuteTime",
+					"type": "string",
+					"description": "下次执行时间",
+					"required": false
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": false
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务数据",
+					"required": false
+				},
+				{
+					"key": "createTime",
+					"type": "string",
+					"description": "创建时间",
+					"required": false
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/Jobs/{id}",
+			"tag": "Jobs",
+			"method": "put",
+			"summary": "修改一个定时任务",
+			"version": "v1",
+			"requestTypeName": "UpdateJobsByIdReqType",
+			"responsesTypeName": "",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": null,
+			"requestBody": [
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式（1-定时|2-手动）",
+					"required": false,
+					"typeNameMap": "JobModeCommonType",
+					"in": "requestBody"
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务所需的参数，用于传到 RabbitMq 上",
+					"required": true,
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/Jobs/{id}",
+			"tag": "Jobs",
+			"method": "delete",
+			"summary": "删除定时任务",
+			"version": "v1",
+			"requestTypeName": "DeleteJobsByIdReqType",
+			"responsesTypeName": "",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": null,
+			"requestBody": null
+		},
+		{
+			"url": "/api/Jobs/{id}/immediate_execute",
+			"tag": "Jobs",
+			"method": "put",
+			"summary": "立刻执行任务一次",
+			"version": "v1",
+			"requestTypeName": "ExecuteJobsByIdReqType",
+			"responsesTypeName": "",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": null,
+			"requestBody": null
+		},
+		{
+			"url": "/api/Jobs/{id}/pause",
+			"tag": "Jobs",
+			"method": "put",
+			"summary": "停止指定任务",
+			"version": "v1",
+			"requestTypeName": "PauseJobsByIdReqType",
+			"responsesTypeName": "",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": null,
+			"requestBody": null
+		},
+		{
+			"url": "/api/Jobs/{id}/resume",
+			"tag": "Jobs",
+			"method": "put",
+			"summary": "恢复指定任务",
+			"version": "v1",
+			"requestTypeName": "ResumeJobsByIdReqType",
+			"responsesTypeName": "",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": null,
+			"requestBody": null
+		},
+		{
+			"url": "/api/Jobs/multiple",
+			"tag": "Jobs",
+			"method": "post",
+			"summary": "添加作业，包含子作业",
+			"version": "v1",
+			"requestTypeName": "AddMultipleReqType",
+			"responsesTypeName": "AddMultipleResType",
+			"parameters": null,
+			"responses": [
+				{
+					"key": "subJobs",
+					"type": "array",
+					"description": "子作业，非必有",
+					"required": false,
+					"typeNameMap": "JobEntityOutCommonType"
+				},
+				{
+					"key": "id",
+					"type": "string",
+					"description": "定时任务 Id",
+					"required": false
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": false
+				},
+				{
+					"key": "groupName",
+					"type": "string",
+					"description": "定时任务所属组",
+					"required": false
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式",
+					"required": false,
+					"typeNameMap": "JobModeCommonType"
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false
+				},
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": false
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "任务状态。0-正常 | 1-已停止 | 2-完成 | 3-错误 | 4-阻塞（已有任务执行中）| 5-触发器不存在",
+					"required": false,
+					"typeNameMap": "TriggerStateCommonType"
+				},
+				{
+					"key": "nextExecuteTime",
+					"type": "string",
+					"description": "下次执行时间",
+					"required": false
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": false
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务数据",
+					"required": false
+				},
+				{
+					"key": "createTime",
+					"type": "string",
+					"description": "创建时间",
+					"required": false
+				}
+			],
+			"requestBody": [
+				{
+					"key": "subJobs",
+					"type": "array",
+					"description": "子任务",
+					"required": false,
+					"typeNameMap": "SubJobEntityInCommonType",
+					"in": "requestBody"
+				},
+				{
+					"key": "parentJobId",
+					"type": "string",
+					"description": "父任务ID",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式（1-定时|2-手动）",
+					"required": false,
+					"typeNameMap": "JobModeCommonType",
+					"in": "requestBody"
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务所需的参数，用于传到 RabbitMq 上",
+					"required": true,
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/Jobs/multiple",
+			"tag": "Jobs",
+			"method": "get",
+			"summary": "搜索作业，包含子作业",
+			"version": "v1",
+			"requestTypeName": "GetMultipleReqType",
+			"responsesTypeName": "GetMultipleResType",
+			"parameters": [
+				{
+					"key": "BizName",
+					"type": "string",
+					"description": "组名",
+					"required": true,
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "page",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"default": 1,
+					"in": "query"
+				},
+				{
+					"key": "per_page",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"default": 100,
+					"in": "query"
+				}
+			],
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "JobsEntityOutCommonType"
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/Jobs/multiple/{id}",
+			"tag": "Jobs",
+			"method": "get",
+			"summary": "获取作业，包含子作业",
+			"version": "v1",
+			"requestTypeName": "GetMultipleByIdReqType",
+			"responsesTypeName": "GetMultipleByIdResType",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": [
+				{
+					"key": "subJobs",
+					"type": "array",
+					"description": "子作业，非必有",
+					"required": false,
+					"typeNameMap": "JobEntityOutCommonType"
+				},
+				{
+					"key": "id",
+					"type": "string",
+					"description": "定时任务 Id",
+					"required": false
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": false
+				},
+				{
+					"key": "groupName",
+					"type": "string",
+					"description": "定时任务所属组",
+					"required": false
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式",
+					"required": false,
+					"typeNameMap": "JobModeCommonType"
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false
+				},
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": false
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "任务状态。0-正常 | 1-已停止 | 2-完成 | 3-错误 | 4-阻塞（已有任务执行中）| 5-触发器不存在",
+					"required": false,
+					"typeNameMap": "TriggerStateCommonType"
+				},
+				{
+					"key": "nextExecuteTime",
+					"type": "string",
+					"description": "下次执行时间",
+					"required": false
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": false
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务数据",
+					"required": false
+				},
+				{
+					"key": "createTime",
+					"type": "string",
+					"description": "创建时间",
+					"required": false
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/Jobs/multiple/{id}",
+			"tag": "Jobs",
+			"method": "put",
+			"summary": "更新作业，包含子作业",
+			"version": "v1",
+			"requestTypeName": "UpdateMultipleByIdReqType",
+			"responsesTypeName": "",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": null,
+			"requestBody": [
+				{
+					"key": "subJobs",
+					"type": "array",
+					"description": "子任务",
+					"required": false,
+					"typeNameMap": "SubJobUpdateInCommonType",
+					"in": "requestBody"
+				},
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false,
+					"in": "requestBody"
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式（1-定时|2-手动）",
+					"required": false,
+					"typeNameMap": "JobModeCommonType",
+					"in": "requestBody"
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": true,
+					"in": "requestBody"
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务所需的参数，用于传到 RabbitMq 上",
+					"required": true,
+					"in": "requestBody"
+				}
+			]
+		},
+		{
+			"url": "/api/Jobs/multiple/{id}",
+			"tag": "Jobs",
+			"method": "delete",
+			"summary": "删除作业，包含子作业",
+			"version": "v1",
+			"requestTypeName": "DeleteMultipleByIdReqType",
+			"responsesTypeName": "",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				}
+			],
+			"responses": null,
+			"requestBody": null
+		},
+		{
+			"url": "/api/node",
+			"tag": "Node",
+			"method": "get",
+			"summary": "获取服务结点Id",
+			"version": "v1",
+			"requestTypeName": "",
+			"responsesTypeName": "",
+			"parameters": null,
+			"responses": null,
+			"requestBody": null
+		}
+	],
+	"auditBiz": [
+		{
+			"url": "/api/Operation",
+			"tag": "Operation",
+			"method": "get",
+			"summary": "按条件查询操作",
+			"version": "v1",
+			"requestTypeName": "GetOperationReqType",
+			"responsesTypeName": "GetOperationResType",
+			"parameters": [
+				{
+					"key": "key",
+					"type": "string",
+					"description": "关键字:用户账号、操作说明",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "product",
+					"type": "integer",
+					"description": "产品(应用); 默认0是全部",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "platformId",
+					"type": "string",
+					"description": "分级",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "date_start",
+					"type": "string",
+					"description": "记录起始时间",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "date_stop",
+					"type": "string",
+					"description": "记录终结时间",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "sort_field",
+					"type": "string",
+					"description": "排序字段",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "service",
+					"type": "string",
+					"description": "记录归属服务gateway/vs 默认：gateway（操作日志）",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "user_ip",
+					"type": "string",
+					"description": "用户IP",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "usr_id",
+					"type": "string",
+					"description": "用户ID",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "Uri",
+					"type": "string",
+					"description": "url",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "result",
+					"type": "integer",
+					"description": "操作结果0-全部 1-成功  2-失败",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "page",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"default": 1,
+					"in": "query"
+				},
+				{
+					"key": "per_page",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"default": 100,
+					"in": "query"
+				}
+			],
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "OperationCommonType"
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/Operation",
+			"tag": "Operation",
+			"method": "post",
+			"summary": "按条件查询操作",
+			"version": "v1",
+			"requestTypeName": "SearchOperationReqType",
+			"responsesTypeName": "SearchOperationResType",
+			"parameters": [
+				{
+					"key": "key",
+					"type": "string",
+					"description": "关键字:用户账号、操作说明",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "product",
+					"type": "integer",
+					"description": "产品(应用); 默认0是全部",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "platformId",
+					"type": "string",
+					"description": "分级",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "date_start",
+					"type": "string",
+					"description": "记录起始时间",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "date_stop",
+					"type": "string",
+					"description": "记录终结时间",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "sort_field",
+					"type": "string",
+					"description": "排序字段",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "service",
+					"type": "string",
+					"description": "记录归属服务gateway/vs 默认：gateway（操作日志）",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "user_ip",
+					"type": "string",
+					"description": "用户IP",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "usr_id",
+					"type": "string",
+					"description": "用户ID",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "Uri",
+					"type": "string",
+					"description": "url",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "result",
+					"type": "integer",
+					"description": "操作结果0-全部 1-成功  2-失败",
+					"default": null,
+					"in": "query"
+				},
+				{
+					"key": "page",
+					"type": "integer",
+					"description": "页码, 从1开始",
+					"default": 1,
+					"in": "query"
+				},
+				{
+					"key": "per_page",
+					"type": "integer",
+					"description": "页容量, [1, 128]",
+					"default": 100,
+					"in": "query"
+				}
+			],
+			"responses": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "OperationCommonType"
+				}
+			],
+			"requestBody": null
+		},
+		{
+			"url": "/api/Record/{id}",
+			"tag": "Record",
+			"method": "get",
+			"summary": "通过操作记录ID获取详细操作记录",
+			"version": "v1",
+			"requestTypeName": "GetRecordByIdReqType",
+			"responsesTypeName": "GetRecordByIdResType",
+			"parameters": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "id",
+					"required": true,
+					"default": null,
+					"in": "path"
+				},
+				{
+					"key": "service",
+					"type": "string",
+					"description": "操作日志归属的服务，默认为网关",
+					"default": null,
+					"in": "query"
+				}
+			],
+			"responses": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "预案ID",
+					"required": false
+				},
+				{
+					"key": "userId",
+					"type": "string",
+					"description": "用户id",
+					"required": false
+				},
+				{
+					"key": "account",
+					"type": "string",
+					"description": "用户账户",
+					"required": false
+				},
+				{
+					"key": "userAgent",
+					"type": "string",
+					"description": "用户浏览器",
+					"required": false
+				},
+				{
+					"key": "dateTime",
+					"type": "string",
+					"description": "时间",
+					"required": false
+				},
+				{
+					"key": "remoteAddress",
+					"type": "string",
+					"description": "远端地址",
+					"required": false
+				},
+				{
+					"key": "upAddress",
+					"type": "string",
+					"description": "后台地址",
+					"required": false
+				},
+				{
+					"key": "requestTime",
+					"type": "string",
+					"description": "请求时间",
+					"required": false
+				},
+				{
+					"key": "responseTime",
+					"type": "string",
+					"description": "上游响应时间",
+					"required": false
+				},
+				{
+					"key": "application",
+					"type": "string",
+					"description": "前端服务",
+					"required": false
+				},
+				{
+					"key": "method",
+					"type": "string",
+					"description": "操作",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "操作结果",
+					"required": false
+				}
+			],
+			"requestBody": null
+		}
+	],
 	"rrsBiz": [
 		{
 			"url": "/api/MainResources",
@@ -741,7 +2004,7 @@
 			"summary": "创建资源类型",
 			"version": "v1",
 			"requestTypeName": "AddResourceTypesReqType",
-			"responsesTypeName": "AddResourceTypesReqType",
+			"responsesTypeName": "AddResourceTypesResType",
 			"parameters": null,
 			"responses": [
 				{
@@ -820,345 +2083,6 @@
 					"description": "支持资源【1支持主体资源，2支持资源，3主体+资源】",
 					"required": false,
 					"typeNameMap": "SupportSourcesCommonType"
-				}
-			],
-			"requestBody": null
-		}
-	],
-	"auditBiz": [
-		{
-			"url": "/api/Operation",
-			"tag": "Operation",
-			"method": "get",
-			"summary": "按条件查询操作",
-			"version": "v1",
-			"requestTypeName": "GetOperationReqType",
-			"responsesTypeName": "GetOperationResType",
-			"parameters": [
-				{
-					"key": "key",
-					"type": "string",
-					"description": "关键字:用户账号、操作说明",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "product",
-					"type": "integer",
-					"description": "产品(应用); 默认0是全部",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "platformId",
-					"type": "string",
-					"description": "分级",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "date_start",
-					"type": "string",
-					"description": "记录起始时间",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "date_stop",
-					"type": "string",
-					"description": "记录终结时间",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "sort_field",
-					"type": "string",
-					"description": "排序字段",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "service",
-					"type": "string",
-					"description": "记录归属服务gateway/vs 默认：gateway（操作日志）",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "user_ip",
-					"type": "string",
-					"description": "用户IP",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "usr_id",
-					"type": "string",
-					"description": "用户ID",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "Uri",
-					"type": "string",
-					"description": "url",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "result",
-					"type": "integer",
-					"description": "操作结果0-全部 1-成功  2-失败",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "page",
-					"type": "integer",
-					"description": "页码, 从1开始",
-					"default": 1,
-					"in": "query"
-				},
-				{
-					"key": "per_page",
-					"type": "integer",
-					"description": "页容量, [1, 128]",
-					"default": 100,
-					"in": "query"
-				}
-			],
-			"responses": [
-				{
-					"key": "totalCount",
-					"type": "integer",
-					"description": "总数",
-					"required": false
-				},
-				{
-					"key": "records",
-					"type": "array",
-					"description": "记录",
-					"required": false,
-					"typeNameMap": "OperationCommonType"
-				}
-			],
-			"requestBody": null
-		},
-		{
-			"url": "/api/Operation",
-			"tag": "Operation",
-			"method": "post",
-			"summary": "按条件查询操作",
-			"version": "v1",
-			"requestTypeName": "SearchOperationReqType",
-			"responsesTypeName": "SearchOperationResType",
-			"parameters": [
-				{
-					"key": "key",
-					"type": "string",
-					"description": "关键字:用户账号、操作说明",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "product",
-					"type": "integer",
-					"description": "产品(应用); 默认0是全部",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "platformId",
-					"type": "string",
-					"description": "分级",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "date_start",
-					"type": "string",
-					"description": "记录起始时间",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "date_stop",
-					"type": "string",
-					"description": "记录终结时间",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "sort_field",
-					"type": "string",
-					"description": "排序字段",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "service",
-					"type": "string",
-					"description": "记录归属服务gateway/vs 默认：gateway（操作日志）",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "user_ip",
-					"type": "string",
-					"description": "用户IP",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "usr_id",
-					"type": "string",
-					"description": "用户ID",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "Uri",
-					"type": "string",
-					"description": "url",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "result",
-					"type": "integer",
-					"description": "操作结果0-全部 1-成功  2-失败",
-					"default": null,
-					"in": "query"
-				},
-				{
-					"key": "page",
-					"type": "integer",
-					"description": "页码, 从1开始",
-					"default": 1,
-					"in": "query"
-				},
-				{
-					"key": "per_page",
-					"type": "integer",
-					"description": "页容量, [1, 128]",
-					"default": 100,
-					"in": "query"
-				}
-			],
-			"responses": [
-				{
-					"key": "totalCount",
-					"type": "integer",
-					"description": "总数",
-					"required": false
-				},
-				{
-					"key": "records",
-					"type": "array",
-					"description": "记录",
-					"required": false,
-					"typeNameMap": "OperationCommonType"
-				}
-			],
-			"requestBody": null
-		},
-		{
-			"url": "/api/Record/{id}",
-			"tag": "Record",
-			"method": "get",
-			"summary": "通过操作记录ID获取详细操作记录",
-			"version": "v1",
-			"requestTypeName": "GetRecordByIdReqType",
-			"responsesTypeName": "GetRecordByIdResType",
-			"parameters": [
-				{
-					"key": "id",
-					"type": "string",
-					"description": "id",
-					"required": true,
-					"default": null,
-					"in": "path"
-				},
-				{
-					"key": "service",
-					"type": "string",
-					"description": "操作日志归属的服务，默认为网关",
-					"default": null,
-					"in": "query"
-				}
-			],
-			"responses": [
-				{
-					"key": "id",
-					"type": "string",
-					"description": "预案ID",
-					"required": false
-				},
-				{
-					"key": "userId",
-					"type": "string",
-					"description": "用户id",
-					"required": false
-				},
-				{
-					"key": "account",
-					"type": "string",
-					"description": "用户账户",
-					"required": false
-				},
-				{
-					"key": "userAgent",
-					"type": "string",
-					"description": "用户浏览器",
-					"required": false
-				},
-				{
-					"key": "dateTime",
-					"type": "string",
-					"description": "时间",
-					"required": false
-				},
-				{
-					"key": "remoteAddress",
-					"type": "string",
-					"description": "远端地址",
-					"required": false
-				},
-				{
-					"key": "upAddress",
-					"type": "string",
-					"description": "后台地址",
-					"required": false
-				},
-				{
-					"key": "requestTime",
-					"type": "string",
-					"description": "请求时间",
-					"required": false
-				},
-				{
-					"key": "responseTime",
-					"type": "string",
-					"description": "上游响应时间",
-					"required": false
-				},
-				{
-					"key": "application",
-					"type": "string",
-					"description": "前端服务",
-					"required": false
-				},
-				{
-					"key": "method",
-					"type": "string",
-					"description": "操作",
-					"required": false
-				},
-				{
-					"key": "status",
-					"type": "integer",
-					"description": "操作结果",
-					"required": false
 				}
 			],
 			"requestBody": null

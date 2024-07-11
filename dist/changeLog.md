@@ -1,25 +1,18 @@
 
-### rrsBiz
+### quartzBiz
 
 |requestTypeName|responsesTypeName|url|methodType|describe|version|
 | --------- | --------- | --------- | --------- | --------- | --------- |
-|`GetMainResourcesReqType`|`GetMainResourcesResType`|`/api/MainResources`|get|按条件查询主资源|v1|
-|`AddMainResourcesReqType`|`AddMainResourcesResType`|`/api/MainResources`|post|创建主资源|v1|
-|`GetMainResByIdReqType`|`GetMainResByIdResType`|`/api/MainResources/{id}`|get|通过主资源ID获取主资源|v1|
-|`UpdateMainResByIdReqType`|``|`/api/MainResources/{id}`|put|更新主资源|v1|
-|`DeleteMainResByIdReqType`|``|`/api/MainResources/{id}`|delete|删除主资源|v1|
-|`SearchAllResourceReqType`|`SearchAllResourceResType`|`/api/ResourceRelationships/resource`|post|获取主体下所有资源|v1|
-|`UpdateAllResourceReqType`|`UpdateAllResourceResType`|`/api/ResourceRelationships/resource`|put|更新主体下资源关系|v1|
-|`SearchSingleResourceReqType`|`SearchSingleResourceResType`|`/api/ResourceRelationships/resource/single`|post|资源查询|v1|
-|`GetResourceDetailsReqType`|`GetResourceDetailsResType`|`/api/ResourceRelationships/resource/details`|post|批量获取资源详情（带关联主体）|v1|
-|`BatchMainDetailsReqType`|`BatchMainDetailsResType`|`/api/ResourceRelationships/main/details`|post|批量获取主体资源详情（带关联下资源）|v1|
-|`BatchResRelationshipsReqType`|``|`/api/ResourceRelationships`|put|绑定资源关系|v1|
-|`UntieResRelationshipsReqType`|``|`/api/ResourceRelationships`|post|解绑资源关系|v1|
-|`GetResourcesReqType`|`GetResourcesResType`|`/api/Resources`|get|按条件查询资源|v1|
-|`AddResourcesReqType`|`AddResourcesResType`|`/api/Resources`|post|创建资源|v1|
-|`GetResourcesByIdReqType`|`GetResourcesByIdResType`|`/api/Resources/{id}`|get|通过资源ID获取资源|v1|
-|`UpdateResourcesByIdReqType`|``|`/api/Resources/{id}`|put|更新资源|v1|
-|`DeleteResourcesByIdReqType`|``|`/api/Resources/{id}`|delete|删除资源|v1|
-|`GetResourceTypesReqType`|`GetResourceTypesResType`|`/api/ResourceTypes`|get|按条件查询资源类型|v1|
-|`AddResourceTypesReqType`|`AddResourceTypesReqType`|`/api/ResourceTypes`|post|创建资源类型|v1|
-|`GetResourceTypesByIdReqType`|`GetResourceTypesByIdResType`|`/api/ResourceTypes/{id}`|get|通过资源类型ID获取资源类型|v1|
+|`GetJobsReqType`|`GetJobsResType`|`/api/Jobs`|get|查询所有定时任务|v1|
+|`AddJobsReqType`|`AddJobsResType`|`/api/Jobs`|post|添加一个定时任务|v1|
+|`GetJobsByIdReqType`|`GetJobsByIdResType`|`/api/Jobs/{id}`|get|查询指定定时任务|v1|
+|`UpdateJobsByIdReqType`|``|`/api/Jobs/{id}`|put|修改一个定时任务|v1|
+|`DeleteJobsByIdReqType`|``|`/api/Jobs/{id}`|delete|删除定时任务|v1|
+|`ExecuteJobsByIdReqType`|``|`/api/Jobs/{id}/immediate_execute`|put|立刻执行任务一次|v1|
+|`PauseJobsByIdReqType`|``|`/api/Jobs/{id}/pause`|put|停止指定任务|v1|
+|`ResumeJobsByIdReqType`|``|`/api/Jobs/{id}/resume`|put|恢复指定任务|v1|
+|`AddMultipleReqType`|`AddMultipleResType`|`/api/Jobs/multiple`|post|添加作业，包含子作业|v1|
+|`GetMultipleReqType`|`GetMultipleResType`|`/api/Jobs/multiple`|get|搜索作业，包含子作业|v1|
+|`GetMultipleByIdReqType`|`GetMultipleByIdResType`|`/api/Jobs/multiple/{id}`|get|获取作业，包含子作业|v1|
+|`UpdateMultipleByIdReqType`|``|`/api/Jobs/multiple/{id}`|put|更新作业，包含子作业|v1|
+|`DeleteMultipleByIdReqType`|``|`/api/Jobs/multiple/{id}`|delete|删除作业，包含子作业|v1|

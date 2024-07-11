@@ -666,7 +666,7 @@ type SimpleResourceOutCommonType = {
  * type {string} 资源类型
  * source {SupportSourcesCommonType} 支持资源【1支持主体资源，2支持资源，3主体+资源】
 */
- type AddResourceTypesReqType = {
+ type AddResourceTypesResType = {
       id: string;
       type: string;
       source: SupportSourcesCommonType;

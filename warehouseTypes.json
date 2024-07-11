@@ -9,7 +9,64 @@
   "eventBiz": {},
   "viscsBiz": {},
   "alarmBiz": {},
-  "quartzBiz": {},
+  "quartzBiz": {
+    "get&/api/Jobs": {
+      "requestTypeName": "GetJobsReqType",
+      "responsesTypeName": "GetJobsResType"
+    },
+    "post&/api/Jobs": {
+      "requestTypeName": "AddJobsReqType",
+      "responsesTypeName": "AddJobsResType"
+    },
+    "get&/api/Jobs/{id}": {
+      "requestTypeName": "GetJobsByIdReqType",
+      "responsesTypeName": "GetJobsByIdResType"
+    },
+    "put&/api/Jobs/{id}": {
+      "requestTypeName": "UpdateJobsByIdReqType",
+      "responsesTypeName": ""
+    },
+    "delete&/api/Jobs/{id}": {
+      "requestTypeName": "DeleteJobsByIdReqType",
+      "responsesTypeName": ""
+    },
+    "put&/api/Jobs/{id}/immediate_execute": {
+      "requestTypeName": "ExecuteJobsByIdReqType",
+      "responsesTypeName": ""
+    },
+    "put&/api/Jobs/{id}/pause": {
+      "requestTypeName": "PauseJobsByIdReqType",
+      "responsesTypeName": ""
+    },
+    "put&/api/Jobs/{id}/resume": {
+      "requestTypeName": "ResumeJobsByIdReqType",
+      "responsesTypeName": ""
+    },
+    "post&/api/Jobs/multiple": {
+      "requestTypeName": "AddMultipleReqType",
+      "responsesTypeName": "AddMultipleResType"
+    },
+    "get&/api/Jobs/multiple": {
+      "requestTypeName": "GetMultipleReqType",
+      "responsesTypeName": "GetMultipleResType"
+    },
+    "get&/api/Jobs/multiple/{id}": {
+      "requestTypeName": "GetMultipleByIdReqType",
+      "responsesTypeName": "GetMultipleByIdResType"
+    },
+    "put&/api/Jobs/multiple/{id}": {
+      "requestTypeName": "UpdateMultipleByIdReqType",
+      "responsesTypeName": ""
+    },
+    "delete&/api/Jobs/multiple/{id}": {
+      "requestTypeName": "DeleteMultipleByIdReqType",
+      "responsesTypeName": ""
+    },
+    "get&/api/node": {
+      "requestTypeName": "",
+      "responsesTypeName": ""
+    }
+  },
   "geoDataBiz": {},
   "fileStorageBiz": {},
   "geoAnalysisBiz": {},
@@ -110,7 +167,7 @@
     },
     "post&/api/ResourceTypes": {
       "requestTypeName": "AddResourceTypesReqType",
-      "responsesTypeName": "AddResourceTypesReqType"
+      "responsesTypeName": "AddResourceTypesResType"
     },
     "get&/api/ResourceTypes/{id}": {
       "requestTypeName": "GetResourceTypesByIdReqType",

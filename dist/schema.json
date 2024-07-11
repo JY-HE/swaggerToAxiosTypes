@@ -1,4 +1,770 @@
 {
+	"quartzBiz": {
+		"QuartzService.Models.Common.JobMode": {
+			"enum": [
+				1,
+				2
+			],
+			"type": "integer",
+			"description": "job 的模式",
+			"format": "int32",
+			"commonTypeName": "JobModeCommonType"
+		},
+		"Quartz.TriggerState": {
+			"enum": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"type": "integer",
+			"format": "int32",
+			"commonTypeName": "TriggerStateCommonType"
+		},
+		"QuartzService.Models.Response.JobEntityOut": {
+			"type": "object",
+			"description": "定时任务返回实体",
+			"properties": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "定时任务 Id",
+					"required": false
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": false
+				},
+				{
+					"key": "groupName",
+					"type": "string",
+					"description": "定时任务所属组",
+					"required": false
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式",
+					"required": false,
+					"typeNameMap": "JobModeCommonType"
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false
+				},
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": false
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "任务状态。0-正常 | 1-已停止 | 2-完成 | 3-错误 | 4-阻塞（已有任务执行中）| 5-触发器不存在",
+					"required": false,
+					"typeNameMap": "TriggerStateCommonType"
+				},
+				{
+					"key": "nextExecuteTime",
+					"type": "string",
+					"description": "下次执行时间",
+					"required": false
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": false
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务数据",
+					"required": false
+				},
+				{
+					"key": "createTime",
+					"type": "string",
+					"description": "创建时间",
+					"required": false
+				}
+			],
+			"commonTypeName": "JobEntityOutCommonType"
+		},
+		"QuartzService.Models.Database.PageableQueryResult`1[QuartzService.Models.Response.JobEntityOut]": {
+			"type": "object",
+			"description": "分页查询结果",
+			"properties": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "JobEntityOutCommonType"
+				}
+			],
+			"commonTypeName": "JobEntityOut]CommonType"
+		},
+		"QuartzService.Models.Request.JobEntityIn": {
+			"type": "object",
+			"description": "定时任务入参",
+			"properties": [
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": true
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": true
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式（1-定时|2-手动）",
+					"required": false,
+					"typeNameMap": "JobModeCommonType"
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": true
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务所需的参数，用于传到 RabbitMq 上",
+					"required": true
+				}
+			],
+			"commonTypeName": "JobEntityInCommonType"
+		},
+		"Microsoft.AspNetCore.Mvc.ProblemDetails": {
+			"type": "object",
+			"description": "",
+			"properties": [
+				{
+					"key": "type",
+					"type": "string",
+					"description": "",
+					"required": false
+				},
+				{
+					"key": "title",
+					"type": "string",
+					"description": "",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "",
+					"required": false
+				},
+				{
+					"key": "detail",
+					"type": "string",
+					"description": "",
+					"required": false
+				},
+				{
+					"key": "instance",
+					"type": "string",
+					"description": "",
+					"required": false
+				}
+			],
+			"commonTypeName": "ProblemDetailsCommonType"
+		},
+		"QuartzService.Models.Request.SubJobEntityIn": {
+			"type": "object",
+			"description": "子任务输入实体",
+			"properties": [
+				{
+					"key": "name",
+					"type": "string",
+					"description": "子任务名称",
+					"required": false
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "子任务描述",
+					"required": false
+				},
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": false
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": false
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务所需的参数，用于传到 RabbitMq 上",
+					"required": false
+				}
+			],
+			"commonTypeName": "SubJobEntityInCommonType"
+		},
+		"QuartzService.Models.Request.JobsEntityIn": {
+			"type": "object",
+			"description": "主任务+多子任务",
+			"properties": [
+				{
+					"key": "subJobs",
+					"type": "array",
+					"description": "子任务",
+					"required": false,
+					"typeNameMap": "SubJobEntityInCommonType"
+				},
+				{
+					"key": "parentJobId",
+					"type": "string",
+					"description": "父任务ID",
+					"required": false
+				},
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": true
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": true
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式（1-定时|2-手动）",
+					"required": false,
+					"typeNameMap": "JobModeCommonType"
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": true
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务所需的参数，用于传到 RabbitMq 上",
+					"required": true
+				}
+			],
+			"commonTypeName": "JobsEntityInCommonType"
+		},
+		"QuartzService.Models.Response.JobsEntityOut": {
+			"type": "object",
+			"description": "主+多子任务输出",
+			"properties": [
+				{
+					"key": "subJobs",
+					"type": "array",
+					"description": "子作业，非必有",
+					"required": false,
+					"typeNameMap": "JobEntityOutCommonType"
+				},
+				{
+					"key": "id",
+					"type": "string",
+					"description": "定时任务 Id",
+					"required": false
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": false
+				},
+				{
+					"key": "groupName",
+					"type": "string",
+					"description": "定时任务所属组",
+					"required": false
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式",
+					"required": false,
+					"typeNameMap": "JobModeCommonType"
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false
+				},
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": false
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "任务状态。0-正常 | 1-已停止 | 2-完成 | 3-错误 | 4-阻塞（已有任务执行中）| 5-触发器不存在",
+					"required": false,
+					"typeNameMap": "TriggerStateCommonType"
+				},
+				{
+					"key": "nextExecuteTime",
+					"type": "string",
+					"description": "下次执行时间",
+					"required": false
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": false
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务数据",
+					"required": false
+				},
+				{
+					"key": "createTime",
+					"type": "string",
+					"description": "创建时间",
+					"required": false
+				}
+			],
+			"commonTypeName": "JobsEntityOutCommonType"
+		},
+		"QuartzService.Models.Database.PageableQueryResult`1[QuartzService.Models.Response.JobsEntityOut]": {
+			"type": "object",
+			"description": "分页查询结果",
+			"properties": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "JobsEntityOutCommonType"
+				}
+			],
+			"commonTypeName": "JobsEntityOut]CommonType"
+		},
+		"QuartzService.Models.Request.SubJobUpdateIn": {
+			"type": "object",
+			"description": "更新子任务实体",
+			"properties": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "任务Id",
+					"required": false
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "子任务名称",
+					"required": false
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "子任务描述",
+					"required": false
+				},
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": false
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": false
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务所需的参数，用于传到 RabbitMq 上",
+					"required": false
+				}
+			],
+			"commonTypeName": "SubJobUpdateInCommonType"
+		},
+		"QuartzService.Models.Request.JobsUpdateIn": {
+			"type": "object",
+			"description": "更新主任务+多子任务",
+			"properties": [
+				{
+					"key": "subJobs",
+					"type": "array",
+					"description": "子任务",
+					"required": false,
+					"typeNameMap": "SubJobUpdateInCommonType"
+				},
+				{
+					"key": "beginTime",
+					"type": "string",
+					"description": "定时任务开始时间",
+					"required": true
+				},
+				{
+					"key": "endTime",
+					"type": "string",
+					"description": "定时任务结束时间",
+					"required": false
+				},
+				{
+					"key": "cron",
+					"type": "string",
+					"description": "定时任务的 Cron 表达式",
+					"required": false
+				},
+				{
+					"key": "name",
+					"type": "string",
+					"description": "定时任务名称",
+					"required": true
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"description": "定时任务描述",
+					"required": false
+				},
+				{
+					"key": "mode",
+					"type": "integer",
+					"description": "定时任务的模式（1-定时|2-手动）",
+					"required": false,
+					"typeNameMap": "JobModeCommonType"
+				},
+				{
+					"key": "bizName",
+					"type": "string",
+					"description": "业务名",
+					"required": true
+				},
+				{
+					"key": "bizData",
+					"type": "object",
+					"description": "业务所需的参数，用于传到 RabbitMq 上",
+					"required": true
+				}
+			],
+			"commonTypeName": "JobsUpdateInCommonType"
+		}
+	},
+	"auditBiz": {
+		"AuditingService.Models.Common.RequestResult": {
+			"enum": [
+				0,
+				1,
+				2
+			],
+			"type": "integer",
+			"description": "操作结果枚举",
+			"format": "int32",
+			"commonTypeName": "RequestResultCommonType"
+		},
+		"AuditingService.Models.Response.Operation": {
+			"type": "object",
+			"description": "操作日志",
+			"properties": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "操作id",
+					"required": false
+				},
+				{
+					"key": "userId",
+					"type": "string",
+					"description": "用户信息",
+					"required": false
+				},
+				{
+					"key": "account",
+					"type": "string",
+					"description": "用户账户",
+					"required": false
+				},
+				{
+					"key": "dateTime",
+					"type": "string",
+					"description": "时间",
+					"required": false
+				},
+				{
+					"key": "remoteAddress",
+					"type": "string",
+					"description": "客户端地址",
+					"required": false
+				},
+				{
+					"key": "application",
+					"type": "string",
+					"description": "应用",
+					"required": false
+				},
+				{
+					"key": "uri",
+					"type": "string",
+					"description": "操作说明",
+					"required": false
+				},
+				{
+					"key": "method",
+					"type": "string",
+					"description": "操作",
+					"required": false
+				},
+				{
+					"key": "type",
+					"type": "string",
+					"description": "操作类型",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "请求状态",
+					"required": false
+				},
+				{
+					"key": "result",
+					"type": "string",
+					"description": "操作结果",
+					"required": false
+				},
+				{
+					"key": "product",
+					"type": "integer",
+					"description": "产品端口号",
+					"required": false
+				}
+			],
+			"commonTypeName": "OperationCommonType"
+		},
+		"AuditingService.Models.Database.PageableQueryResult`1[AuditingService.Models.Response.Operation]": {
+			"type": "object",
+			"description": "分页查询结果",
+			"properties": [
+				{
+					"key": "totalCount",
+					"type": "integer",
+					"description": "总数",
+					"required": false
+				},
+				{
+					"key": "records",
+					"type": "array",
+					"description": "记录",
+					"required": false,
+					"typeNameMap": "OperationCommonType"
+				}
+			],
+			"commonTypeName": "Operation]CommonType"
+		},
+		"AuditingService.Models.Response.Record": {
+			"type": "object",
+			"description": "预案数据",
+			"properties": [
+				{
+					"key": "id",
+					"type": "string",
+					"description": "预案ID",
+					"required": false
+				},
+				{
+					"key": "userId",
+					"type": "string",
+					"description": "用户id",
+					"required": false
+				},
+				{
+					"key": "account",
+					"type": "string",
+					"description": "用户账户",
+					"required": false
+				},
+				{
+					"key": "userAgent",
+					"type": "string",
+					"description": "用户浏览器",
+					"required": false
+				},
+				{
+					"key": "dateTime",
+					"type": "string",
+					"description": "时间",
+					"required": false
+				},
+				{
+					"key": "remoteAddress",
+					"type": "string",
+					"description": "远端地址",
+					"required": false
+				},
+				{
+					"key": "upAddress",
+					"type": "string",
+					"description": "后台地址",
+					"required": false
+				},
+				{
+					"key": "requestTime",
+					"type": "string",
+					"description": "请求时间",
+					"required": false
+				},
+				{
+					"key": "responseTime",
+					"type": "string",
+					"description": "上游响应时间",
+					"required": false
+				},
+				{
+					"key": "application",
+					"type": "string",
+					"description": "前端服务",
+					"required": false
+				},
+				{
+					"key": "method",
+					"type": "string",
+					"description": "操作",
+					"required": false
+				},
+				{
+					"key": "status",
+					"type": "integer",
+					"description": "操作结果",
+					"required": false
+				}
+			],
+			"commonTypeName": "RecordCommonType"
+		}
+	},
 	"rrsBiz": {
 		"Microsoft.AspNetCore.Mvc.ProblemDetails": {
 			"type": "object",
@@ -564,197 +1330,6 @@
 				}
 			],
 			"commonTypeName": "SimpleResourceOutCommonType"
-		}
-	},
-	"auditBiz": {
-		"AuditingService.Models.Common.RequestResult": {
-			"enum": [
-				0,
-				1,
-				2
-			],
-			"type": "integer",
-			"description": "操作结果枚举",
-			"format": "int32",
-			"commonTypeName": "RequestResultCommonType"
-		},
-		"AuditingService.Models.Response.Operation": {
-			"type": "object",
-			"description": "操作日志",
-			"properties": [
-				{
-					"key": "id",
-					"type": "string",
-					"description": "操作id",
-					"required": false
-				},
-				{
-					"key": "userId",
-					"type": "string",
-					"description": "用户信息",
-					"required": false
-				},
-				{
-					"key": "account",
-					"type": "string",
-					"description": "用户账户",
-					"required": false
-				},
-				{
-					"key": "dateTime",
-					"type": "string",
-					"description": "时间",
-					"required": false
-				},
-				{
-					"key": "remoteAddress",
-					"type": "string",
-					"description": "客户端地址",
-					"required": false
-				},
-				{
-					"key": "application",
-					"type": "string",
-					"description": "应用",
-					"required": false
-				},
-				{
-					"key": "uri",
-					"type": "string",
-					"description": "操作说明",
-					"required": false
-				},
-				{
-					"key": "method",
-					"type": "string",
-					"description": "操作",
-					"required": false
-				},
-				{
-					"key": "type",
-					"type": "string",
-					"description": "操作类型",
-					"required": false
-				},
-				{
-					"key": "status",
-					"type": "integer",
-					"description": "请求状态",
-					"required": false
-				},
-				{
-					"key": "result",
-					"type": "string",
-					"description": "操作结果",
-					"required": false
-				},
-				{
-					"key": "product",
-					"type": "integer",
-					"description": "产品端口号",
-					"required": false
-				}
-			],
-			"commonTypeName": "OperationCommonType"
-		},
-		"AuditingService.Models.Database.PageableQueryResult`1[AuditingService.Models.Response.Operation]": {
-			"type": "object",
-			"description": "分页查询结果",
-			"properties": [
-				{
-					"key": "totalCount",
-					"type": "integer",
-					"description": "总数",
-					"required": false
-				},
-				{
-					"key": "records",
-					"type": "array",
-					"description": "记录",
-					"required": false,
-					"typeNameMap": "OperationCommonType"
-				}
-			],
-			"commonTypeName": "Operation]CommonType"
-		},
-		"AuditingService.Models.Response.Record": {
-			"type": "object",
-			"description": "预案数据",
-			"properties": [
-				{
-					"key": "id",
-					"type": "string",
-					"description": "预案ID",
-					"required": false
-				},
-				{
-					"key": "userId",
-					"type": "string",
-					"description": "用户id",
-					"required": false
-				},
-				{
-					"key": "account",
-					"type": "string",
-					"description": "用户账户",
-					"required": false
-				},
-				{
-					"key": "userAgent",
-					"type": "string",
-					"description": "用户浏览器",
-					"required": false
-				},
-				{
-					"key": "dateTime",
-					"type": "string",
-					"description": "时间",
-					"required": false
-				},
-				{
-					"key": "remoteAddress",
-					"type": "string",
-					"description": "远端地址",
-					"required": false
-				},
-				{
-					"key": "upAddress",
-					"type": "string",
-					"description": "后台地址",
-					"required": false
-				},
-				{
-					"key": "requestTime",
-					"type": "string",
-					"description": "请求时间",
-					"required": false
-				},
-				{
-					"key": "responseTime",
-					"type": "string",
-					"description": "上游响应时间",
-					"required": false
-				},
-				{
-					"key": "application",
-					"type": "string",
-					"description": "前端服务",
-					"required": false
-				},
-				{
-					"key": "method",
-					"type": "string",
-					"description": "操作",
-					"required": false
-				},
-				{
-					"key": "status",
-					"type": "integer",
-					"description": "操作结果",
-					"required": false
-				}
-			],
-			"commonTypeName": "RecordCommonType"
 		}
 	}
 }
