@@ -909,18 +909,6 @@
 			],
 			"responses": null,
 			"requestBody": null
-		},
-		{
-			"url": "/api/node",
-			"tag": "Node",
-			"method": "get",
-			"summary": "获取服务结点Id",
-			"version": "v1",
-			"requestTypeName": "",
-			"responsesTypeName": "",
-			"parameters": null,
-			"responses": null,
-			"requestBody": null
 		}
 	],
 	"auditBiz": [
